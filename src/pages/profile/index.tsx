@@ -1,4 +1,8 @@
+import { GetServerSidePropsContext } from "next";
+import { unstable_getServerSession as getServerSession } from "next-auth";
 import React from "react";
+import { getUnauthorizedRedirect } from "../../utils/serverSideIsAuth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 const getHourMinutePadded = (date: Date) =>
   date.toLocaleTimeString("default", { hour: "2-digit", minute: "2-digit" });
@@ -102,3 +106,13 @@ const Profile = ({}: ProfileProps) => {
 };
 
 export default Profile;
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const unauthorizedRedirect = await getUnauthorizedRedirect(ctx);
+
+  if (unauthorizedRedirect) {
+    return unauthorizedRedirect;
+  }
+
+  return { props: {} };
+};

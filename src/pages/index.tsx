@@ -28,10 +28,7 @@ const Home: NextPage = () => {
           ) : (
             <>
               <div>Welcome back {session.data?.user?.name}</div>
-              <button
-                className="btn btn-primary"
-                onClick={() => signOut({ callbackUrl: "/loggedout" })}
-              >
+              <button className="btn btn-primary" onClick={() => signOut()}>
                 Sign out
               </button>
             </>
