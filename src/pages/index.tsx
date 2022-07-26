@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
-import { useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
@@ -20,9 +19,22 @@ const Home: NextPage = () => {
         {!hello.isLoading && hello?.data && <h1>{hello.data.greeting}</h1>}
         {session.status === "loading" ||
           (session.status === "unauthenticated" ? (
-            <Link href="/api/auth/signin">Sign in</Link>
+            <button
+              onClick={() => signIn(undefined, { callbackUrl: "/profile" })}
+              className="btn btn-primary"
+            >
+              Sign in
+            </button>
           ) : (
-            <div>Welcome back {session.data?.user?.name}</div>
+            <>
+              <div>Welcome back {session.data?.user?.name}</div>
+              <button
+                className="btn btn-primary"
+                onClick={() => signOut({ callbackUrl: "/loggedout" })}
+              >
+                Sign out
+              </button>
+            </>
           ))}
       </main>
     </>
