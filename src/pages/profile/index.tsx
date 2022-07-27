@@ -105,12 +105,23 @@ const Profile = ({}: ProfileProps) => {
 
 export default Profile;
 
+const getCallbackURI = (url: undefined | string) => {
+  if (!url) {
+    return undefined;
+  }
+  return encodeURIComponent(url);
+};
+
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const session = await getAuthSession(ctx);
+  const callbackURI = getCallbackURI(ctx.req.url);
+
   if (!session) {
     return {
       redirect: {
-        destination: "/api/auth/signin",
+        destination: `/auth/signin${
+          callbackURI ? `?callbackUrl=${callbackURI}` : ""
+        }`,
         permanent: false,
       },
       props: { from: ctx.req.url },

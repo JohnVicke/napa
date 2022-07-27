@@ -19,10 +19,7 @@ const Home: NextPage = () => {
         {!hello.isLoading && hello?.data && <h1>{hello.data.greeting}</h1>}
         {session.status === "loading" ||
           (session.status === "unauthenticated" ? (
-            <button
-              onClick={() => signIn(undefined, { callbackUrl: "/profile" })}
-              className="btn btn-primary"
-            >
+            <button onClick={() => signIn()} className="btn btn-primary">
               Sign in
             </button>
           ) : (
