@@ -6,6 +6,8 @@ import { trpc } from "../utils/trpc";
 const Home: NextPage = () => {
   const session = useSession();
   const hello = trpc.useQuery(["example.hello", { text: "from time keeper" }]);
+  const test = trpc.useQuery(["example.getAll"]);
+  const { mutate } = trpc.useMutation(["example.createTest"]);
 
   return (
     <>
@@ -30,6 +32,15 @@ const Home: NextPage = () => {
               </button>
             </>
           ))}
+        <div className="mt-6" />
+        <button
+          className="btn btn-primary"
+          onClick={() => mutate({ text: "hello world" })}
+        >
+          add thingy
+        </button>
+        <h1 className="text-center pt-6">{JSON.stringify(test.data)}</h1>
+        <div className="card"></div>
       </main>
     </>
   );
