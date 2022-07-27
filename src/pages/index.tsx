@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
 
@@ -8,6 +9,11 @@ const Home: NextPage = () => {
   const hello = trpc.useQuery(["example.hello", { text: "from time keeper" }]);
   const test = trpc.useQuery(["example.getAll"]);
   const { mutate } = trpc.useMutation(["example.createTest"]);
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   return (
     <>
@@ -19,6 +25,9 @@ const Home: NextPage = () => {
 
       <main className="container mx-auto flex flex-col items-center justify-center h-screen p-4">
         {!hello.isLoading && hello?.data && <h1>{hello.data.greeting}</h1>}
+        <button onClick={toggleTheme} className="btn btn-ghost">
+          change colortheme
+        </button>
         {session.status === "loading" ||
           (session.status === "unauthenticated" ? (
             <button onClick={() => signIn()} className="btn btn-primary">
