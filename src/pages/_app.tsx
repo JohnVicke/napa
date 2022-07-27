@@ -5,7 +5,9 @@ import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
+import "remixicon/fonts/remixicon.css";
 import { ThemeProvider } from "next-themes";
+import { Layout } from "../components/Layout";
 
 const MyApp: AppType = ({
   Component,
@@ -14,7 +16,9 @@ const MyApp: AppType = ({
   return (
     <ThemeProvider enableSystem themes={["light", "dark"]}>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </SessionProvider>
     </ThemeProvider>
   );
