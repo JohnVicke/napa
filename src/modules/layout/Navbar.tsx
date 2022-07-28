@@ -7,6 +7,8 @@ import React from "react";
 import { TextInput } from "../../components/TextInput";
 import { SideMenuItems } from "./SideMenuItems";
 
+const capitalize = (s: string) => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
+
 const ToggleThemeButton = () => {
   const { theme, setTheme } = useTheme();
   const animation = {
@@ -21,12 +23,22 @@ const ToggleThemeButton = () => {
   };
 
   return (
-    <div className="pointer-cursor pt-2" onClick={toggleTheme}>
+    <div className="cursor-pointer pt-2 " onClick={toggleTheme}>
       <AnimatePresence exitBeforeEnter>
         {theme === "light" ? (
-          <motion.i className="ri-moon-fill ri-xl" key="moon" {...animation} />
+          <div className="flex items-center w-full justify-between">
+            {capitalize(theme)}
+            <motion.i
+              className="ri-moon-fill ri-xl"
+              key="moon"
+              {...animation}
+            />
+          </div>
         ) : (
-          <motion.i className="ri-sun-fill ri-xl" key="sun" {...animation} />
+          <div className="flex items-center w-full justify-between">
+            {capitalize(theme)}
+            <motion.i className="ri-sun-fill ri-xl" key="sun" {...animation} />
+          </div>
         )}
       </AnimatePresence>
     </div>
@@ -78,8 +90,8 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ user }) => {
           <li>
             <a>Profile</a>
           </li>
-          <li>
-            <a>Settings</a>
+          <li className="full-w">
+            <ToggleThemeButton />
           </li>
           <li>
             <a onClick={() => signOut()}>Logout</a>
@@ -138,9 +150,7 @@ border-b-2 border-base-200
                 />
               </div>
               {status === "authenticated" ? (
-                <>
-                  <ProfileMenu user={data.user} />
-                </>
+                <ProfileMenu user={data.user} />
               ) : (
                 <button className="btn btn-primary" onClick={() => signIn()}>
                   sign in
