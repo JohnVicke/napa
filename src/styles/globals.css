@@ -25,3 +25,9 @@
 .avoid-nav {
   margin-top: var(--navbar-height);
 }
+
+.sticky-top {
+  position: sticky;
+  top: var(--navbar-height);
+  z-index: 1;
+}
