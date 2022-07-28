@@ -1,9 +1,9 @@
 import { createProtectedRouter } from "./protected-router";
 
-export const protectedExampleRouter = createProtectedRouter()
-  .query("getSession", {
-    resolve({ ctx }) {
-      return ctx.session;
+export const workweekRouter = createProtectedRouter()
+  .query("getSummary", {
+    resolve({ ctx: { prisma } }) {
+      return "hello";
     },
   })
   .query("getSecretMessage", {

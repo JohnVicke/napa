@@ -1,13 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider             = "mysql"
+  provider             = "postgresql"
   url                  = env("DATABASE_URL")
   shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
@@ -75,11 +72,10 @@ model FlexHours {
 }
 
 model WorkDay {
-  id        Int      @id @default(autoincrement())
-  complete  Boolean?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id         Int       @id @default(autoincrement())
+  complete   Boolean?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   WorkWeek   WorkWeek? @relation(fields: [workWeekId], references: [id])
   workWeekId Int?
 }
