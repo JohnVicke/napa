@@ -85,7 +85,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ user }) => {
         </label>
         <ul
           tabIndex={0}
-          className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-200 bg-opacity-90 backdrop-blur rounded-box w-52"
+          className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-200 rounded-box w-52"
         >
           <li>
             <a>Profile</a>
