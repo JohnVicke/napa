@@ -4,7 +4,6 @@ import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const hello = trpc.useQuery(["example.hello", { text: "from time keeper" }]);
-  const test = trpc.useQuery(["example.getAll"]);
 
   return (
     <>
@@ -17,7 +16,6 @@ const Home: NextPage = () => {
       <main className="flex flex-col items-center justify-center h-full p-4">
         {!hello.isLoading && hello?.data && <h1>{hello.data.greeting}</h1>}
 
-        <h1 className="text-center pt-6">{JSON.stringify(test.data)}</h1>
         <div className="card"></div>
       </main>
     </>
