@@ -14,13 +14,23 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center h-full p-4">
-        {!hello.isLoading && hello?.data && <h1>{hello.data.greeting}</h1>}
-
-        <h1 className="text-center pt-6 break-all">
-          {JSON.stringify(test.data)}
-        </h1>
-        <div className="card"></div>
+      <main className="hero max-h-full pt-24">
+        <div className="hero-content flex-col lg:flex-row-reverse">
+          <img
+            src="https://placeimg.com/260/400/arch"
+            className="max-w-sm rounded-lg shadow-2xl"
+          />
+          <div>
+            <h1 className="text-5xl font-bold">Time keeper</h1>
+            <p className="py-6">
+              The idea sprang from a desire to keep track of time at the office.
+              Usually this is done by a spreadsheet or a spreadsheet app. But
+              with time-keeper, you can keep track of time in the browser.
+              <br />
+            </p>
+            <button className="btn btn-primary">Get Started</button>
+          </div>
+        </div>
       </main>
     </>
   );

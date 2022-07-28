@@ -13,9 +13,9 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   return (
     <>
       <Navbar>
-        <div className="px-2 max-w-screen-lg w-full">{children}</div>
+        <div className="mt-24 " />
+        <div className="px-4 max-w-screen-lg w-full mx-auto">{children}</div>
       </Navbar>
-      <div className="sticky mt-6" />
       <Footer />
     </>
   );

@@ -19,7 +19,7 @@ const ToggleThemeButton = () => {
   };
 
   return (
-    <div className="pointer-cursor pt-1" onClick={toggleTheme}>
+    <div className="pointer-cursor pt-2" onClick={toggleTheme}>
       <AnimatePresence exitBeforeEnter>
         {theme === "light" ? (
           <motion.i className="ri-moon-fill ri-xl" key="moon" {...animation} />
@@ -93,12 +93,13 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { data, status } = useSession();
   return (
-    <div className="drawer">
+    <div className="drawer h-fullpage">
       <input id="navbar-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         <nav
           className="
-  sticky top-0 z-30 flex w-full justify-center bg-opacity-90 backdrop-blur bg-base-200 text-base-content shadow-sm"
+          fixed
+  top-0 z-30 flex w-full justify-center bg-opacity-90 backdrop-blur bg-base-200 text-base-content shadow-sm"
         >
           <div className="navbar w-full">
             <div className="flex-none lg:hidden">
@@ -140,12 +141,19 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
                   <kbd className="kbd kbd-sm px-2">k</kbd>
                 </div>
               </div>
+              <div className="pl-2" />
+              <ToggleThemeButton />
             </div>
             <div className="flex-none gap-2">
-              <ToggleThemeButton />
-              <div className="pr-2" />
               {status === "authenticated" ? (
-                <ProfileMenu user={data.user} />
+                <>
+                  <div className="hidden lg:flex">
+                    <Link passHref href="/dashboard">
+                      <button className="btn btn-ghost">Dashboard</button>
+                    </Link>
+                  </div>
+                  <ProfileMenu user={data.user} />
+                </>
               ) : (
                 <button className="btn btn-primary" onClick={() => signIn()}>
                   sign in
@@ -154,16 +162,15 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
             </div>
           </div>
         </nav>
-        {children}
+        <div>{children}</div>
       </div>
       <div className="drawer-side">
         <label htmlFor="navbar-drawer" className="drawer-overlay" />
         <ul className="menu p-4 overflow-y-auto w-80 bg-base-100">
           <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
+            <Link passHref href="/dashboard">
+              <a>Dashboard</a>
+            </Link>
           </li>
         </ul>
       </div>

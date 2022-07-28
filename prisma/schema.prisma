@@ -63,8 +63,3 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
-
-model Test {
-  id     String  @id @default(cuid())
-  thingy String?
-}

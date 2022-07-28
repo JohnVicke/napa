@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --navbar-height: 66px;
+  --footer-height: 160px;
+}
+
 .btn {
   text-transform: none;
 }
@@ -11,4 +16,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.h-fullpage {
+  min-height: calc(100vh - var(--navbar-height));
 }
