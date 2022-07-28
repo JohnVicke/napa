@@ -10,22 +10,23 @@ interface SigninProps {
 
 const Signin = ({ callbackUrl }: SigninProps) => {
   return (
-    <div className="hero min-h-screen">
-      <div className="hero-content">
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <div className="card-body">
-            <div>Login with your fav provider</div>
-            <button
-              className="btn btn-primary"
-              onClick={() =>
-                signIn("google", {
-                  callbackUrl: callbackUrl ? callbackUrl : "/",
-                })
-              }
-            >
-              Sign in with google
-            </button>
+    <div className="flex justify-center pt-24">
+      <div className="card flex-shrink-0 w-full max-w-sm bg-base-200">
+        <div className="card-body">
+          <div>
+            Login with <span className="italic text-thin">(your fav)</span>{" "}
+            provider
           </div>
+          <button
+            className="btn btn-primary"
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: callbackUrl ? callbackUrl : "/",
+              })
+            }
+          >
+            Sign in with google
+          </button>
         </div>
       </div>
     </div>

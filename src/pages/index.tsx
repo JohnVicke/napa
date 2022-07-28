@@ -3,6 +3,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
 import { getAuthSession } from "../utils/getAuthSession";
+import { signIn } from "next-auth/react";
 
 const Home: NextPage = () => {
   return (
@@ -27,7 +28,9 @@ const Home: NextPage = () => {
               with time-keeper, you can keep track of time in the browser.
               <br />
             </p>
-            <button className="btn btn-primary">Get Started</button>
+            <button className="btn btn-primary" onClick={() => signIn()}>
+              Get Started
+            </button>
           </div>
         </div>
       </main>
