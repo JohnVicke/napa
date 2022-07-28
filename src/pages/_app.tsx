@@ -7,7 +7,7 @@ import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import "remixicon/fonts/remixicon.css";
 import { ThemeProvider } from "next-themes";
-import { Layout } from "../components/Layout";
+import { Layout } from "../modules/layout/Layout";
 
 const MyApp: AppType = ({
   Component,

@@ -17,7 +17,9 @@ const Home: NextPage = () => {
       <main className="flex flex-col items-center justify-center h-full p-4">
         {!hello.isLoading && hello?.data && <h1>{hello.data.greeting}</h1>}
 
-        <h1 className="text-center pt-6">{JSON.stringify(test.data)}</h1>
+        <h1 className="text-center pt-6 break-all">
+          {JSON.stringify(test.data)}
+        </h1>
         <div className="card"></div>
       </main>
     </>

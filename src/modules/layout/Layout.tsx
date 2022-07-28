@@ -12,9 +12,10 @@ const Footer: React.FC<{}> = () => {
 export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   return (
     <>
-      <Navbar />
+      <Navbar>
+        <div className="px-2 max-w-screen-lg w-full">{children}</div>
+      </Navbar>
       <div className="sticky mt-6" />
-      {children}
       <Footer />
     </>
   );
