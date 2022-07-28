@@ -12,7 +12,7 @@ const TrackTime = () => {
             <TextInput label="Description" placeholder="Work..." />
           </div>
           {!editManually ? (
-            <>
+            <div className="flex gap-2">
               <button className="btn btn-primary">
                 <i className="ri-play-fill font-normal mr-2 " />
                 Start timer
@@ -24,7 +24,7 @@ const TrackTime = () => {
                 <i className="ri-edit-2-fill font-normal mr-2" />
                 Manually
               </button>
-            </>
+            </div>
           ) : (
             <>
               <div className="flex gap-2 w-full lg:w-[unset]">
