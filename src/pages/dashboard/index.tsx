@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from "next";
+import Link from "next/link";
 import React from "react";
 import { getAuthSession } from "../../utils/getAuthSession";
 
@@ -68,36 +69,30 @@ interface ProfileProps {}
 const Profile = ({}: ProfileProps) => {
   return (
     <div className="flex flex-col">
-      <h2 className="text-2xl font-bold">
-        Logged time <span className="font-normal ml-2">jan 1 - jan </span>
-      </h2>
-      <div className="stats stats-horizontal shadow pt-2">
-        <Stat title="this week so far" desc="jan1 - jan7" value={34} />
-        <Stat title="Scheduled hours" desc="jan1 - jan7" value={40} />
+      <h2 className="text-2xl font-bold">Summary</h2>
+      <div className="stats stats-vertical md:stats-horizontal shadow pt-2">
         <Stat
-          title="Estimated flex"
-          desc="jan1 - jan7"
+          title="Total hours worked"
+          desc="Logged on time-keeper"
+          value={34}
+        />
+        <Stat
+          title="Flex"
+          desc="Remember to take some time off!"
           value={2}
           severity="success"
         />
       </div>
+      <Link href="/workweek/1">
+        <button className="btn btn-primary my-6">go to this week</button>
+      </Link>
       <div>
-        <h2 className="text-2xl font-bold pt-6">Entries this week</h2>
-        <TimeEntry
-          date={new Date()}
-          scheduled={40}
-          total={39}
-          clockIn={new Date()}
-          clockOut={new Date()}
-        />
-        <div className="pt-2" />
-        <TimeEntry
-          date={new Date()}
-          scheduled={40}
-          total={39}
-          clockIn={new Date()}
-          clockOut={new Date()}
-        />
+        Week history here history here !/!{" "}
+        <span>vecka 2 - jobbade 42 timmar</span>
+      </div>
+      <div>
+        Week history here history here !/!{" "}
+        <span>vecka 2 - jobbade 42 timmar</span>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ const ToggleThemeButton = () => {
   };
 
   return (
-    <div className="pointer-cursor pt-1" onClick={toggleTheme}>
+    <div className="pointer-cursor pt-2" onClick={toggleTheme}>
       <AnimatePresence exitBeforeEnter>
         {theme === "light" ? (
           <motion.i className="ri-moon-fill ri-xl" key="moon" {...animation} />
@@ -149,7 +149,7 @@ border-b-2 border-base-200
             </div>
           </div>
         </nav>
-        {children}
+        <div>{children}</div>
       </div>
       <div className="drawer-side">
         <label htmlFor="navbar-drawer" className="drawer-overlay" />
