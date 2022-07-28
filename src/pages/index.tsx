@@ -1,10 +1,10 @@
+import React from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const hello = trpc.useQuery(["example.hello", { text: "from time keeper" }]);
-  const test = trpc.useQuery(["example.getAll"]);
 
   return (
     <>

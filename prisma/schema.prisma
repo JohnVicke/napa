@@ -9,6 +9,7 @@ generator client {
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
@@ -47,13 +48,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  workWeeks     WorkWeek[]
+  FlexHours     FlexHours?
 }
 
 model VerificationToken {
@@ -62,4 +65,34 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model FlexHours {
+  id     Int    @id @default(autoincrement())
+  hours  Float  @default(0)
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+}
+
+model WorkDay {
+  id        Int      @id @default(autoincrement())
+  complete  Boolean?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  WorkWeek   WorkWeek? @relation(fields: [workWeekId], references: [id])
+  workWeekId Int?
+}
+
+model WorkWeek {
+  id Int @id @default(autoincrement())
+
+  hoursWorked Int       @default(0)
+  totalHours  Int       @default(40)
+  startDate   DateTime
+  endDate     DateTime
+  createdAt   DateTime  @default(now())
+  WorkDay     WorkDay[]
+  User        User?     @relation(fields: [userId], references: [id])
+  userId      String?
 }
