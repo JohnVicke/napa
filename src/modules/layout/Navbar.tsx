@@ -4,6 +4,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import React from "react";
+import { TextInput } from "../../components/TextInput";
+import { SideMenuItems } from "./SideMenuItems";
 
 const ToggleThemeButton = () => {
   const { theme, setTheme } = useTheme();
@@ -93,35 +95,25 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { data, status } = useSession();
   return (
-    <div className="drawer">
+    <div className="drawer h-fullpage ">
       <input id="navbar-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         <nav
           className="
-  sticky top-0 z-30 flex w-full justify-center bg-opacity-90 backdrop-blur bg-base-200 text-base-content shadow-sm"
+          fixed
+border-b-2 border-base-200
+  top-0 z-30 flex w-full justify-center bg-opacity-90 backdrop-blur bg-base-100 text-base-content"
         >
-          <div className="navbar w-full">
-            <div className="flex-none lg:hidden">
+          <div className="navbar w-full p-0 m-0">
+            <div className="ml-4 flex-none lg:hidden">
               <label
                 htmlFor="navbar-drawer"
                 className="btn btn-square btn-ghost"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="inline-block w-6 h-6 stroke-current"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  ></path>
-                </svg>
+                <i className="ri-menu-4-line ri-xl" />
               </label>
             </div>
-            <div className="flex-1">
+            <div className="w-52 lg:border-r-2 border-base-200 h-full justify-center">
               <div className="mr-6">
                 <Link href="/">
                   <button className="btn btn-ghost font-bold text-md lg:text-xl cursor-pointer">
@@ -129,23 +121,26 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
                   </button>
                 </Link>
               </div>
-              <div className="form-control relative hidden md:block">
-                <input
+            </div>
+            <div className="gap-2 flex-1 justify-end mr-4">
+              <div className="form-control relative hidden sm:block">
+                <TextInput
                   type="text"
                   placeholder="Search"
-                  className="input input-bordered w-64 lg:w-80 "
+                  containerSize="sm"
+                  startIcon={<i className="ri-search-line ri-md" />}
+                  endContent={
+                    <>
+                      <kbd className="kbd kbd-xs px-2">ctrl</kbd>+
+                      <kbd className="kbd kbd-xs px-2">k</kbd>
+                    </>
+                  }
                 />
-                <div className="absolute top-3 right-8 gap-1 hidden lg:flex">
-                  <kbd className="kbd kbd-sm px-2">ctrl</kbd>+
-                  <kbd className="kbd kbd-sm px-2">k</kbd>
-                </div>
               </div>
-            </div>
-            <div className="flex-none gap-2">
-              <ToggleThemeButton />
-              <div className="pr-2" />
               {status === "authenticated" ? (
-                <ProfileMenu user={data.user} />
+                <>
+                  <ProfileMenu user={data.user} />
+                </>
               ) : (
                 <button className="btn btn-primary" onClick={() => signIn()}>
                   sign in
@@ -158,14 +153,9 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
       </div>
       <div className="drawer-side">
         <label htmlFor="navbar-drawer" className="drawer-overlay" />
-        <ul className="menu p-4 overflow-y-auto w-80 bg-base-100">
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
-        </ul>
+        <div className="menu py-24 overflow-y-auto w-80 bg-base-100">
+          <SideMenuItems />
+        </div>
       </div>
     </div>
   );
