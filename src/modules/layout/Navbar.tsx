@@ -36,7 +36,7 @@ const ToggleThemeButton = () => {
           </div>
         ) : (
           <div className="flex items-center w-full justify-between">
-            {capitalize(theme)}
+            {capitalize(theme as "dark")}
             <motion.i className="ri-sun-fill ri-xl" key="sun" {...animation} />
           </div>
         )}

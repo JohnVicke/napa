@@ -24,24 +24,6 @@ type TimeEntryProps = {
   clockOut: Date;
 };
 
-const TimeEntry: React.FC<TimeEntryProps> = ({
-  date,
-  total,
-  scheduled,
-  clockIn,
-  clockOut,
-}) => {
-  return (
-    <div className="bg-base-300 rounded-lg p-4">
-      <h3>{days[date.getDay()]}</h3>
-      <div>{total}</div>
-      <div>{scheduled}</div>
-      <div>{getHourMinutePadded(clockIn)}</div>
-      <div>{getHourMinutePadded(clockOut)}</div>
-    </div>
-  );
-};
-
 type StatProps = {
   title: string;
   value: number;
