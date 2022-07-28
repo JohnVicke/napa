@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "db:up": "supabase start",
+    "db:up": "cd ./prisma && supabase start",
     "shadowdb:up": "cd ./prisma/shadowdb && docker-compose up -d"
   },
   "dependencies": {
