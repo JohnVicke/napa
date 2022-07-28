@@ -12,3 +12,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.h-fullpage {
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+.avoid-nav {
+  margin-top: var(--navbar-height);
+}
