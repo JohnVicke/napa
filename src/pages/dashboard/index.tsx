@@ -66,17 +66,6 @@ const Profile = ({}: ProfileProps) => {
           severity="success"
         />
       </div>
-      <Link href="/workweek/1">
-        <button className="btn btn-primary my-6">go to this week</button>
-      </Link>
-      <div>
-        Week history here history here !/!{" "}
-        <span>vecka 2 - jobbade 42 timmar</span>
-      </div>
-      <div>
-        Week history here history here !/!{" "}
-        <span>vecka 2 - jobbade 42 timmar</span>
-      </div>
     </div>
   );
 };
