@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import React from "react";
 import { getAuthSession } from "../../utils/getAuthSession";
+import { withAuthServerSideProps } from "../../utils/withAuthServerSideProps";
 
 const getHourMinutePadded = (date: Date) =>
   date.toLocaleTimeString("default", { hour: "2-digit", minute: "2-digit" });
@@ -82,27 +83,8 @@ const Profile = ({}: ProfileProps) => {
 
 export default Profile;
 
-const getCallbackURI = (url: undefined | string) => {
-  if (!url) {
-    return undefined;
-  }
-  return encodeURIComponent(url);
-};
-
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getAuthSession(ctx);
-  const callbackURI = getCallbackURI(ctx.req.url);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth/signin${
-          callbackURI ? `?callbackUrl=${callbackURI}` : ""
-        }`,
-        permanent: false,
-      },
-      props: { from: ctx.req.url },
-    };
-  }
-  return { props: {} };
-};
+export const getServerSideProps = withAuthServerSideProps(async () => {
+  return {
+    props: {},
+  };
+});

@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="hero max-h-full pt-24">
+      <main className="hero max-h-full lg:pt-24">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img
             src="https://placeimg.com/260/400/arch"
@@ -28,7 +28,10 @@ const Home: NextPage = () => {
               with time-keeper, you can keep track of time in the browser.
               <br />
             </p>
-            <button className="btn btn-primary" onClick={() => signIn()}>
+            <button
+              className="btn btn-primary float-right lg:float-left"
+              onClick={() => signIn()}
+            >
               Get Started
             </button>
           </div>

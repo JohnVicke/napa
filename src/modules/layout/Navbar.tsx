@@ -94,7 +94,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ user }) => {
             <ToggleThemeButton />
           </li>
           <li>
-            <a onClick={() => signOut()}>Logout</a>
+            <a onClick={() => signOut({ callbackUrl: "/" })}>Logout</a>
           </li>
         </ul>
       </div>

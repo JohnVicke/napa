@@ -1,7 +1,14 @@
+import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { TextInput } from "../components/TextInput";
+import {
+  InferWithAuthServerSideProps,
+  withAuthServerSideProps,
+} from "../utils/withAuthServerSideProps";
 
-const TrackTime = () => {
+type TrackTimeProps = InferWithAuthServerSideProps<typeof getServerSideProps>;
+
+const TrackTime = ({ hello }: TrackTimeProps) => {
   const [editManually, setEditManually] = React.useState(false);
 
   return (
@@ -57,3 +64,5 @@ const TrackTime = () => {
 };
 
 export default TrackTime;
+
+export const getServerSideProps = withAuthServerSideProps();

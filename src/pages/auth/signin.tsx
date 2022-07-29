@@ -46,7 +46,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
   return {
     props: {
-      callbackUrl,
+      callbackUrl: callbackUrl ? callbackUrl : "/",
     },
   };
 };
