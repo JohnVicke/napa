@@ -50,6 +50,7 @@ model User {
   email         String?    @unique
   emailVerified DateTime?
   image         String?
+  totalHours    Float?
   accounts      Account[]
   sessions      Session[]
   workWeeks     WorkWeek[]
@@ -71,24 +72,41 @@ model FlexHours {
   userId String @unique
 }
 
+model WorkDayTimeEntry {
+  id        Int       @id @default(autoincrement())
+  timerOn   Boolean   @default(true)
+  startTime DateTime?
+  endTime   DateTime?
+  WorkDay   WorkDay?  @relation(fields: [workDayId], references: [id])
+  workDayId Int?
+}
+
 model WorkDay {
-  id         Int       @id @default(autoincrement())
-  complete   Boolean?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  WorkWeek   WorkWeek? @relation(fields: [workWeekId], references: [id])
-  workWeekId Int?
+  id               Int                @id @default(autoincrement())
+  complete         Boolean?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  day              Int?
+  WorkWeek         WorkWeek?          @relation(fields: [workWeekId], references: [id])
+  workWeekId       Int?
+  WorkDayTimeEntry WorkDayTimeEntry[]
+
+  @@unique([workWeekId, day])
 }
 
 model WorkWeek {
   id Int @id @default(autoincrement())
 
+  weekNumber  Int
   hoursWorked Int       @default(0)
   totalHours  Int       @default(40)
   startDate   DateTime
   endDate     DateTime
-  createdAt   DateTime  @default(now())
   WorkDay     WorkDay[]
   User        User?     @relation(fields: [userId], references: [id])
   userId      String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([weekNumber, userId])
 }

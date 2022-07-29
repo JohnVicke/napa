@@ -1,29 +1,6 @@
-import { GetServerSidePropsContext } from "next";
-import Link from "next/link";
 import React from "react";
-import { getAuthSession } from "../../utils/getAuthSession";
 import { withAuthServerSideProps } from "../../utils/withAuthServerSideProps";
-
-const getHourMinutePadded = (date: Date) =>
-  date.toLocaleTimeString("default", { hour: "2-digit", minute: "2-digit" });
-
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-type TimeEntryProps = {
-  date: Date;
-  total: number;
-  scheduled: number;
-  clockIn: Date;
-  clockOut: Date;
-};
+import { trpc } from "@/utils/trpc";
 
 type StatProps = {
   title: string;
@@ -50,6 +27,7 @@ const Stat: React.FC<StatProps> = ({
 interface ProfileProps {}
 
 const Profile = ({}: ProfileProps) => {
+  const { data } = trpc.useQuery(["workweek.getSummary"]);
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-bold">Summary</h2>
@@ -57,12 +35,12 @@ const Profile = ({}: ProfileProps) => {
         <Stat
           title="Total hours worked"
           desc="Logged on time-keeper"
-          value={34}
+          value={data?.total || 0}
         />
         <Stat
           title="Flex"
           desc="Remember to take some time off!"
-          value={2}
+          value={data?.flex || 0}
           severity="success"
         />
       </div>
