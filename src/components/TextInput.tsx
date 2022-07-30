@@ -23,7 +23,7 @@ export const TextInput = ({
       <input
         {...props}
         className={`input input-${containerSize} input-bordered w-full 
-        pl-${!!startIcon ? 8 : 4}`}
+        ${!!startIcon ? "pl-8" : "pl-4"}`}
       />
       <div className="absolute top-[50%] translate-y-[-50%] right-2 gap-1 hidden lg:flex">
         {endContent}

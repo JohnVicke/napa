@@ -2,30 +2,27 @@ import {
   getCurrentWeekMonday,
   getCurrentWeekNumber,
   getCurrentWeekSunday,
+  getElapsedHours,
 } from "@/utils/date-helpers";
+import { z } from "zod";
 import { createProtectedRouter } from "./protected-router";
 
 export const workweekRouter = createProtectedRouter()
   .query("getSummary", {
     async resolve({ ctx }) {
-      console.log("workWeek", getCurrentWeekNumber());
       const user = await ctx.prisma.user.findFirst({
         where: { id: ctx.session.user.id },
+        include: {
+          FlexHours: true,
+          workWeeks: true,
+        },
       });
 
       if (!user) {
         throw new Error("User not found");
       }
 
-      const flexHours = await ctx.prisma.flexHours.findFirst({
-        where: { userId: ctx.session.user.id },
-      });
-
-      if (!flexHours) {
-        throw new Error("No flex hours found");
-      }
-
-      return { flex: flexHours.hours, total: user.totalHours };
+      return { flex: user.FlexHours?.hours, total: user.totalHours };
     },
   })
   .query("getWorkWeek", {
@@ -72,7 +69,7 @@ export const workweekRouter = createProtectedRouter()
 
       const workWeek = await ctx.prisma.workWeek.upsert({
         where: {
-          workWeekUnique: { weekNumber, userId: ctx.session.user.id },
+          weekNumber_userId: { weekNumber, userId: ctx.session.user.id },
         },
         update: {},
         create: {
@@ -108,5 +105,25 @@ export const workweekRouter = createProtectedRouter()
   })
 
   .mutation("stopTimer", {
-    async resolve({ ctx }) {},
+    input: z.object({
+      id: z.number(),
+    }),
+    async resolve({ input, ctx }) {
+      const endTime = new Date();
+      const timeEntry = await ctx.prisma.workDayTimeEntry.update({
+        where: { id: input.id },
+        data: { timerOn: false, endTime },
+      });
+
+      const user = await ctx.prisma.user.update({
+        where: { id: ctx.session.user.id },
+        data: {
+          totalHours: {
+            increment: getElapsedHours(timeEntry.startTime, endTime),
+          },
+        },
+      });
+      console.log(user);
+      return { timerStopped: true };
+    },
   });
