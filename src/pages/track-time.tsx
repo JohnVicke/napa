@@ -44,9 +44,11 @@ const WorkDayTimeEntry = ({ timeEntry }: WorkDayTimeEntryProps) => {
 };
 
 const TrackTime = () => {
-  const { data: workWeekData, isLoading: workWeekLoading } = trpc.useQuery([
-    "workweek.getWorkWeek",
-  ]);
+  const {
+    data: workWeekData,
+    isLoading: workWeekLoading,
+    error: workWeekError,
+  } = trpc.useQuery(["workweek.getWorkWeek"]);
   const { mutate: startTimer } = trpc.useMutation(["workweek.startTimer"]);
   const { mutate: stopTimer } = trpc.useMutation(["workweek.stopTimer"]);
   const [editManually, setEditManually] = React.useState(false);

@@ -7,6 +7,7 @@ import "../styles/globals.css";
 import "remixicon/fonts/remixicon.css";
 import { ThemeProvider } from "next-themes";
 import { Layout } from "../modules/layout/Layout";
+import { ToastController } from "@/modules/toast/ToastController";
 
 const MyApp: AppType = ({
   Component,
@@ -16,6 +17,7 @@ const MyApp: AppType = ({
     <ThemeProvider enableSystem themes={["light", "dark"]}>
       <SessionProvider session={session}>
         <Layout>
+          <ToastController />
           <Component {...pageProps} />
         </Layout>
       </SessionProvider>
