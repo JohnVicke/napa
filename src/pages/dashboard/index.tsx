@@ -1,6 +1,7 @@
 import React from "react";
 import { withAuthServerSideProps } from "../../utils/withAuthServerSideProps";
 import { trpc } from "@/utils/trpc";
+import { useToastStore } from "@/modules/toast/toastStore";
 
 type StatProps = {
   title: string;
@@ -27,6 +28,7 @@ const Stat: React.FC<StatProps> = ({
 interface ProfileProps {}
 
 const Profile = ({}: ProfileProps) => {
+  const { addToast } = useToastStore();
   const { data } = trpc.useQuery(["workweek.getSummary"]);
   return (
     <div className="flex flex-col">
