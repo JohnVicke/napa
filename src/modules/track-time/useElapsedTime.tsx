@@ -4,6 +4,7 @@ import { getTimeDifferenceString } from "@/utils/date-helpers";
 export const useElapsedTime = (startTime?: Date, endTime?: Date | null) => {
   const initialState =
     startTime && endTime ? getTimeDifferenceString(startTime, endTime) : "";
+
   const [timeElapsed, setTimeElapsed] = useState(initialState);
 
   useEffect(() => {

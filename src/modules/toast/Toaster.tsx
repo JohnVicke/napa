@@ -6,6 +6,8 @@ interface ToastProps extends Toast {
   removeToast: () => void;
 }
 
+const TOASTER_DURATION = 5000;
+
 export const Toaster = ({
   message,
   removeToast,
@@ -19,7 +21,7 @@ export const Toaster = ({
 
     const timeout = setTimeout(() => {
       removeToast();
-    }, 5000);
+    }, TOASTER_DURATION);
 
     return () => {
       clearTimeout(timeout);

@@ -43,7 +43,7 @@ export const timerRouter = createProtectedRouter()
         where: { userId: ctx.session.user.id },
       });
 
-      if (!timer) {
+      if (!timer?.startTime) {
         throw new Error("wattt");
       }
 
@@ -83,7 +83,7 @@ export const timerRouter = createProtectedRouter()
         },
       });
 
-      await ctx.prisma.timer.update({
+      const updateTimer = await ctx.prisma.timer.update({
         where: { userId: ctx.session.user.id },
         data: {
           on: false,
@@ -91,7 +91,7 @@ export const timerRouter = createProtectedRouter()
         },
       });
 
-      console.log("workweekdayentry", dayEntry);
+      console.log(updateTimer);
 
       return dayEntry;
     },

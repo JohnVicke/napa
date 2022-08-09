@@ -5,6 +5,11 @@ import { TrackTimeAutomatically } from "./TrackTimeAutomatically";
 import { TrackTimeManually } from "./TrackTimeManually";
 import { useElapsedTime } from "./useElapsedTime";
 
+const Timer = ({ startTime }: { startTime: Date }) => {
+  const elapsedTime = useElapsedTime(startTime);
+  return <div>{elapsedTime}</div>;
+};
+
 type AddTimeEntryProps = {
   workWeekId: number;
 };
@@ -12,10 +17,9 @@ type AddTimeEntryProps = {
 export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   const [editManually, setEditManually] = React.useState(false);
   const timer = trpc.useQuery(["timer.getTimer"]);
-
-  const elapsedTime = useElapsedTime(timer.data?.startTime);
-
   const { setQueryData, getQueryData } = trpc.useContext();
+
+  console.log(timer.data);
 
   const startTimer = trpc.useMutation(["timer.startTimer"], {
     onSuccess: (data) => {
@@ -57,8 +61,8 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   return (
     <div className="sticky-top flex flex-col gap-2 py-8 bg-base-100 items-end lg:flex-row w-full">
       <div className="flex w-full flex-col gap-2 justify-end items-end lg:justify-start lg:flex-row">
-        {timer.data?.on ? (
-          <div className="flex-1 w-full">{elapsedTime}</div>
+        {!!timer.data?.on && timer.data.startTime ? (
+          <Timer startTime={timer.data?.startTime} />
         ) : (
           <div className="flex-1 w-full">
             <TextInput label="Description" placeholder="Work..." />

@@ -4,7 +4,7 @@ import { Navbar } from "./Navbar";
 import { SideMenu } from "./SideMenu";
 
 export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
-  const { data, status } = useSession();
+  const { status } = useSession();
   return (
     <Navbar>
       {status === "authenticated" && <SideMenu />}

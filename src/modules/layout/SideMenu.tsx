@@ -1,5 +1,4 @@
 import React from "react";
-import { SideMenuItem } from "./SideMenuItem";
 import { SideMenuItems } from "./SideMenuItems";
 
 export const SideMenu = () => (
