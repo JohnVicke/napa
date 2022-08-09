@@ -19,8 +19,6 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   const timer = trpc.useQuery(["timer.getTimer"]);
   const { setQueryData, getQueryData } = trpc.useContext();
 
-  console.log(timer.data);
-
   const startTimer = trpc.useMutation(["timer.startTimer"], {
     onSuccess: (data) => {
       if (data) {

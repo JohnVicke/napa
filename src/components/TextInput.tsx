@@ -15,6 +15,7 @@ export const TextInput = ({
   ...props
 }: InputProps) => {
   const [hideEndContent, setHideEndContent] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   return (
     <div className="form-control relative w-full">
       {label && <label className="label">{label}</label>}
@@ -23,7 +24,13 @@ export const TextInput = ({
       </div>
       <input
         {...props}
+        ref={inputRef}
         onFocus={() => setHideEndContent(true)}
+        onBlur={() => {
+          if (inputRef.current?.value && inputRef.current?.value.length > 0) {
+            setHideEndContent(false);
+          }
+        }}
         className={`input input-${containerSize} input-bordered w-full 
         ${!!startIcon ? "pl-8" : "pl-4"}`}
       />
