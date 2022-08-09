@@ -5,23 +5,22 @@ import { withAuthServerSideProps } from "../utils/withAuthServerSideProps";
 import { inferQueryResponse } from "./api/trpc/[trpc]";
 import { getWeekDayString } from "@/utils/date-helpers";
 import { useElapsedTime } from "@/modules/track-time/useElapsedTime";
-import { TrackTimeManually } from "@/modules/track-time/TrackTimeManually";
-import { TrackTimeAutomatically } from "@/modules/track-time/TrackTimeAutomatically";
+import { useFormik } from "formik";
+import { AddTimeEntry } from "@/modules/track-time/TrackTime";
 
-type WorkDay =
-  inferQueryResponse<"workweek.getWorkWeek">["workWeek"]["WorkDay"][0];
-
-type WorkDayTimeEntry = WorkDay["WorkDayTimeEntry"][0];
+type WorkDay = inferQueryResponse<"workday.getWorkDay">;
 
 type WorkDayProps = {
-  day: WorkDay;
+  day?: WorkDay;
 };
 
 type WorkDayTimeEntryProps = {
-  timeEntry: WorkDayTimeEntry;
+  timeEntry: any;
 };
 
 const WorkDay = ({ day, children }: React.PropsWithChildren<WorkDayProps>) => {
+  if (!day) return <></>;
+
   return (
     <>
       <div>{getWeekDayString(day.day)}</div>
@@ -43,34 +42,66 @@ const WorkDayTimeEntry = ({ timeEntry }: WorkDayTimeEntryProps) => {
   );
 };
 
+const CreateWorkWeek = () => {
+  const { invalidateQueries } = trpc.useContext();
+
+  const { mutate, isLoading } = trpc.useMutation("workweek.createWorkWeek", {
+    onSuccess: () => {
+      invalidateQueries(["workweek.getWorkWeek"]);
+    },
+  });
+
+  const formik = useFormik({
+    initialValues: { hours: 40 },
+    onSubmit: ({ hours }) => {
+      mutate({ totalHours: hours });
+    },
+  });
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <div className="flex flex-col">
+        <TextInput
+          id="hours"
+          name="hours"
+          onChange={formik.handleChange}
+          value={formik.values.hours}
+          type="number"
+          label="Hours scheduled this week"
+        />
+        <div className="mt-2" />
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={formik.isSubmitting || isLoading}
+        >
+          Create new work week
+        </button>
+      </div>
+    </form>
+  );
+};
+
 const TrackTime = () => {
-  const {
-    data: workWeekData,
-    isLoading: workWeekLoading,
-    error: workWeekError,
-  } = trpc.useQuery(["workweek.getWorkWeek"]);
-  const { mutate: startTimer } = trpc.useMutation(["workweek.startTimer"]);
-  const { mutate: stopTimer } = trpc.useMutation(["workweek.stopTimer"]);
-  const [editManually, setEditManually] = React.useState(false);
+  const workWeek = trpc.useQuery(["workweek.getWorkWeek"]);
 
-  const handleStartTimer = () =>
-    !workWeekData?.hasTimerOn.timerOn ? startTimer() : () => {};
+  if (workWeek.isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  const handleStopTimer = () =>
-    workWeekData?.hasTimerOn
-      ? stopTimer({ id: workWeekData.hasTimerOn.id })
-      : () => {};
+  if (!workWeek.data?.workWeek) {
+    return <CreateWorkWeek />;
+  }
 
   return (
     <div>
       <div>
         <div className="text-2xl font-bold">
-          Week: {workWeekData?.workWeek.weekNumber}
+          Week: {workWeek.data.workWeek.weekNumber}
         </div>
         <div>
           <>
-            Period: {workWeekData?.workWeek.startDate.toLocaleDateString()} -
-            {workWeekData?.workWeek.endDate.toLocaleDateString()}
+            Period: {workWeek.data.workWeek.startDate.toLocaleDateString()} -
+            {workWeek.data.workWeek.endDate.toLocaleDateString()}
           </>
         </div>
       </div>
@@ -79,25 +110,12 @@ const TrackTime = () => {
           <div className="flex-1 w-full">
             <TextInput label="Description" placeholder="Work..." />
           </div>
-          {!editManually ? (
-            <TrackTimeAutomatically
-              startTimer={handleStartTimer}
-              stopTimer={handleStopTimer}
-              timerOn={workWeekData?.hasTimerOn.timerOn}
-              setEditType={() => setEditManually(true)}
-            />
-          ) : (
-            <TrackTimeManually setEditType={() => setEditManually(false)} />
-          )}
+          <AddTimeEntry workWeekId={workWeek.data.workWeek.id} />
         </div>
       </div>
-      {workWeekLoading && !workWeekData ? (
-        <div className="flex justify-center">
-          <div className="spinner" />
-        </div>
-      ) : (
+      {workWeek.data.workWeek.WorkDay.length > 0 ? (
         <div className="flex flex-col gap-2">
-          {workWeekData?.workWeek.WorkDay.map((day) => (
+          {workWeek.data.workWeek.WorkDay.map((day) => (
             <WorkDay key={day.id} day={day}>
               {day.WorkDayTimeEntry.map((timeEntry) => (
                 <div className="pb-2" key={timeEntry.id}>
@@ -106,6 +124,10 @@ const TrackTime = () => {
               ))}
             </WorkDay>
           ))}
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <h3>no entires for this week</h3>
         </div>
       )}
     </div>

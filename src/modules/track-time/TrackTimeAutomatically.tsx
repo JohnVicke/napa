@@ -1,3 +1,4 @@
+import { Icon } from "@/components/icon/Icon";
 import React from "react";
 
 type TrackTimeAutomaticallyProps = {
@@ -11,20 +12,18 @@ export const TrackTimeAutomatically = ({
   startTimer,
   stopTimer,
   setEditType,
-}: TrackTimeAutomaticallyProps) => {
-  return (
-    <div className="flex gap-2">
-      <button
-        className={`btn ${timerOn ? "btn-error" : "btn-primary"}`}
-        onClick={timerOn ? stopTimer : startTimer}
-      >
-        <i className="ri-play-fill font-normal mr-2 " />
-        {`${timerOn ? "Stop" : "Start"}`} timer
-      </button>
-      <button className="btn btn-outline" onClick={setEditType}>
-        <i className="ri-edit-2-fill font-normal mr-2" />
-        Manually
-      </button>
-    </div>
-  );
-};
+}: TrackTimeAutomaticallyProps) => (
+  <div className="flex gap-2">
+    <button
+      className={`btn ${timerOn ? "btn-error" : "btn-primary"}`}
+      onClick={timerOn ? stopTimer : startTimer}
+    >
+      <Icon icon="ri-play-fill" className="font-normal mr-2" />
+      {`${timerOn ? "Stop" : "Start"}`} timer
+    </button>
+    <button className="btn btn-outline" onClick={setEditType}>
+      <Icon icon="ri-edit-2-fill" className="font-normal mr-2" />
+      Manually
+    </button>
+  </div>
+);

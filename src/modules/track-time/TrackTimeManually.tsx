@@ -1,5 +1,6 @@
 import React from "react";
 import { TextInput } from "@/components/TextInput";
+import { Icon } from "@/components/icon/Icon";
 
 export const TrackTimeManually = ({
   setEditType,
@@ -14,11 +15,11 @@ export const TrackTimeManually = ({
       </div>
       <div className="flex gap-2">
         <button className="btn btn-primary">
-          <i className="ri-save-fill font-normal mr-2" />
+          <Icon icon="ri-save-fill" className="font-normal mr-2" />
           Save
         </button>
         <button className="btn btn-outline" onClick={setEditType}>
-          <i className="ri-time-fill font-normal mr-2" />
+          <Icon icon="ri-time-fill" className="font-normal mr-2" />
           Use timer
         </button>
       </div>

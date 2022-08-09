@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Toast } from "./toastStore";
+import { Icon } from "@/components/icon/Icon";
 
 interface ToastProps extends Toast {
   removeToast: () => void;
@@ -31,7 +32,7 @@ export const Toaster = ({
     <div className={`alert ${alertType}`}>
       <span className="font-medium">{message}</span>
       <button onClick={removeToast}>
-        <i className="ri-close-circle-fill ri-lg" />
+        <Icon icon="ri-close-circle-fill" />
       </button>
     </div>
   );
