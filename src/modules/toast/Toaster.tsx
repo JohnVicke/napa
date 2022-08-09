@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import { Toast } from "./toastStore";
+import { Icon } from "@/components/icon/Icon";
 
 interface ToastProps extends Toast {
   removeToast: () => void;
 }
+
+const TOASTER_DURATION = 5000;
 
 export const Toaster = ({
   message,
@@ -18,7 +21,7 @@ export const Toaster = ({
 
     const timeout = setTimeout(() => {
       removeToast();
-    }, 5000);
+    }, TOASTER_DURATION);
 
     return () => {
       clearTimeout(timeout);
@@ -31,7 +34,7 @@ export const Toaster = ({
     <div className={`alert ${alertType}`}>
       <span className="font-medium">{message}</span>
       <button onClick={removeToast}>
-        <i className="ri-close-circle-fill ri-lg" />
+        <Icon icon="ri-close-circle-fill" />
       </button>
     </div>
   );

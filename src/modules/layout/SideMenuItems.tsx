@@ -1,3 +1,4 @@
+import { Icon } from "@/components/icon/Icon";
 import { useRouter } from "next/router";
 import React from "react";
 import { SideMenuItem } from "./SideMenuItem";
@@ -6,12 +7,12 @@ const items = [
   {
     title: "Track time",
     href: "/track-time",
-    icon: <i className="ri-time-fill" />,
+    icon: <Icon icon="ri-time-fill" />,
   },
   {
     title: "Dashboard",
     href: "/dashboard",
-    icon: <i className="ri-dashboard-fill" />,
+    icon: <Icon icon="ri-dashboard-fill" />,
   },
 ];
 

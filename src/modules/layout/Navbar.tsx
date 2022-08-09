@@ -1,3 +1,4 @@
+import { Icon } from "@/components/icon/Icon";
 import { AnimatePresence, motion } from "framer-motion";
 import { Session } from "next-auth";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -28,16 +29,16 @@ const ToggleThemeButton = () => {
         {theme === "light" ? (
           <div className="flex items-center w-full justify-between">
             {capitalize(theme)}
-            <motion.i
-              className="ri-moon-fill ri-xl"
-              key="moon"
-              {...animation}
-            />
+            <motion.div key="moon" {...animation}>
+              <Icon icon="ri-moon-fill" size="xl" />
+            </motion.div>
           </div>
         ) : (
           <div className="flex items-center w-full justify-between">
             {capitalize(theme as "dark")}
-            <motion.i className="ri-sun-fill ri-xl" key="sun" {...animation} />
+            <motion.div key="sun" {...animation}>
+              <Icon icon="ri-sun-fill" size="xl" />
+            </motion.div>
           </div>
         )}
       </AnimatePresence>
@@ -122,7 +123,7 @@ border-b-2 border-base-200
                 htmlFor="navbar-drawer"
                 className="btn btn-square btn-ghost"
               >
-                <i className="ri-menu-4-line ri-xl" />
+                <Icon icon="ri-menu-4-line" size="xl" />
               </label>
             </div>
             <div className="w-52 lg:border-r-2 border-base-200 h-full justify-center">
