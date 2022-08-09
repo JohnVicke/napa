@@ -6,7 +6,7 @@ import { inferQueryResponse } from "./api/trpc/[trpc]";
 import { getWeekDayString } from "@/utils/date-helpers";
 import { useElapsedTime } from "@/modules/track-time/useElapsedTime";
 import { useFormik } from "formik";
-import { AddTimeEntry } from "@/modules/track-time/TrackTime";
+import { AddTimeEntry } from "@/modules/track-time/AddTimeEntry";
 
 type WorkDay = inferQueryResponse<"workday.getWorkDay">;
 
@@ -105,14 +105,7 @@ const TrackTime = () => {
           </>
         </div>
       </div>
-      <div className="sticky-top flex flex-col gap-2 py-8 bg-base-100 items-end lg:flex-row w-full">
-        <div className="flex w-full flex-col gap-2 justify-end items-end lg:justify-start lg:flex-row">
-          <div className="flex-1 w-full">
-            <TextInput label="Description" placeholder="Work..." />
-          </div>
-          <AddTimeEntry workWeekId={workWeek.data.workWeek.id} />
-        </div>
-      </div>
+      <AddTimeEntry workWeekId={workWeek.data.workWeek.id} />
       {workWeek.data.workWeek.WorkDay.length > 0 ? (
         <div className="flex flex-col gap-2">
           {workWeek.data.workWeek.WorkDay.map((day) => (

@@ -6,12 +6,14 @@ type TrackTimeAutomaticallyProps = {
   startTimer: () => void;
   stopTimer: () => void;
   setEditType: () => void;
+  startTime?: Date;
 };
 export const TrackTimeAutomatically = ({
   timerOn,
   startTimer,
   stopTimer,
   setEditType,
+  startTime,
 }: TrackTimeAutomaticallyProps) => (
   <div className="flex gap-2">
     <button

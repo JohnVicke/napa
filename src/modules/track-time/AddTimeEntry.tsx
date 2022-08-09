@@ -1,7 +1,9 @@
+import { TextInput } from "@/components/TextInput";
 import { trpc } from "@/utils/trpc";
 import React from "react";
 import { TrackTimeAutomatically } from "./TrackTimeAutomatically";
 import { TrackTimeManually } from "./TrackTimeManually";
+import { useElapsedTime } from "./useElapsedTime";
 
 type AddTimeEntryProps = {
   workWeekId: number;
@@ -9,15 +11,16 @@ type AddTimeEntryProps = {
 
 export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   const [editManually, setEditManually] = React.useState(false);
-
   const timer = trpc.useQuery(["timer.getTimer"]);
+
+  const elapsedTime = useElapsedTime(timer.data?.startTime);
 
   const { setQueryData, getQueryData } = trpc.useContext();
 
   const startTimer = trpc.useMutation(["timer.startTimer"], {
-    onSuccess: ({ startTime }) => {
-      if (timer.data) {
-        setQueryData(["timer.getTimer"], { ...timer.data, on: true });
+    onSuccess: (data) => {
+      if (data) {
+        setQueryData(["timer.getTimer"], { ...data });
       }
     },
   });
@@ -51,16 +54,27 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
     stopTimer.mutate({ workWeekId });
   };
 
-  if (editManually) {
-    return <TrackTimeManually setEditType={() => setEditManually(false)} />;
-  }
-
   return (
-    <TrackTimeAutomatically
-      startTimer={handleStart}
-      stopTimer={handleStop}
-      timerOn={!!timer.data?.on}
-      setEditType={() => setEditManually(true)}
-    />
+    <div className="sticky-top flex flex-col gap-2 py-8 bg-base-100 items-end lg:flex-row w-full">
+      <div className="flex w-full flex-col gap-2 justify-end items-end lg:justify-start lg:flex-row">
+        {timer.data?.on ? (
+          <div className="flex-1 w-full">{elapsedTime}</div>
+        ) : (
+          <div className="flex-1 w-full">
+            <TextInput label="Description" placeholder="Work..." />
+          </div>
+        )}
+        {editManually ? (
+          <TrackTimeManually setEditType={() => setEditManually(false)} />
+        ) : (
+          <TrackTimeAutomatically
+            startTimer={handleStart}
+            stopTimer={handleStop}
+            timerOn={!!timer.data?.on}
+            setEditType={() => setEditManually(true)}
+          />
+        )}
+      </div>
+    </div>
   );
 };
