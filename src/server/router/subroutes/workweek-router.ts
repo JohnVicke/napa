@@ -1,8 +1,7 @@
 import {
-  getCurrentWeekMonday,
   getCurrentWeekNumber,
-  getCurrentWeekSunday,
-  getElapsedHours,
+  getLastMondayFromDate,
+  getNextSundayFromDate,
 } from "@/utils/date-helpers";
 import { z } from "zod";
 import { createProtectedRouter } from "../protected-router";
@@ -53,6 +52,7 @@ export const workweekRouter = createProtectedRouter()
       totalHours: z.number().nullish(),
     }),
     async resolve({ ctx, input }) {
+      const today = new Date();
       const weekNumber = getCurrentWeekNumber();
       const workWeek = await ctx.prisma.workWeek.upsert({
         where: {
@@ -61,8 +61,8 @@ export const workweekRouter = createProtectedRouter()
         update: {},
         create: {
           totalHours: input?.totalHours || undefined,
-          startDate: getCurrentWeekMonday(),
-          endDate: getCurrentWeekSunday(),
+          startDate: getLastMondayFromDate(today),
+          endDate: getNextSundayFromDate(today),
           userId: ctx.session.user.id,
           weekNumber,
           WorkDay: {

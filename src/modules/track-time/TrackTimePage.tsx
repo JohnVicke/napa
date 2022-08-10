@@ -6,6 +6,7 @@ import { getWeekDayString } from "@/utils/date-helpers";
 import { useElapsedTime } from "@/modules/track-time/useElapsedTime";
 import { useFormik } from "formik";
 import { AddTimeEntry } from "@/modules/track-time/AddTimeEntry";
+import { Icon } from "@/components/icon/Icon";
 
 type WorkDay = inferQueryResponse<"workday.getWorkDay">;
 
@@ -14,7 +15,7 @@ type WorkDayProps = {
 };
 
 type WorkDayTimeEntryProps = {
-  timeEntry: any;
+  timeEntry: inferQueryResponse<"timeEntry.getTimeEntry">;
 };
 
 const WorkDay = ({ day, children }: React.PropsWithChildren<WorkDayProps>) => {
@@ -23,13 +24,42 @@ const WorkDay = ({ day, children }: React.PropsWithChildren<WorkDayProps>) => {
   return (
     <>
       <div>{getWeekDayString(day.day)}</div>
-      <div className="m-2 w-full">{children}</div>
+      <div className="w-full">{children}</div>
     </>
   );
 };
 
 const WorkDayTimeEntry = ({ timeEntry }: WorkDayTimeEntryProps) => {
   const elapsedTime = useElapsedTime(timeEntry.startTime, timeEntry?.endTime);
+
+  const { getQueryData, setQueryData, invalidateQueries } = trpc.useContext();
+  const { mutate } = trpc.useMutation(["timeEntry.deleteTimeEntry"], {
+    onSuccess: (data) => {
+      const weekData = getQueryData(["workweek.getWorkWeek"]);
+      if (data && weekData?.workWeek) {
+        setQueryData(["workweek.getWorkWeek"], {
+          workWeek: {
+            ...weekData.workWeek,
+            WorkDay: [
+              ...weekData.workWeek.WorkDay.map((d) =>
+                d.id === timeEntry.workDayId
+                  ? {
+                      ...d,
+                      WorkDayTimeEntry: [
+                        ...d.WorkDayTimeEntry.filter(
+                          (t) => t.id !== timeEntry.id
+                        ),
+                      ],
+                    }
+                  : d
+              ),
+            ],
+          },
+        });
+      }
+    },
+  });
+
   return (
     <div className="flex w-full bg-base-200 px-2 py-4 rounded-lg justify-between">
       <div>{elapsedTime}</div>
@@ -37,6 +67,12 @@ const WorkDayTimeEntry = ({ timeEntry }: WorkDayTimeEntryProps) => {
         {timeEntry.startTime?.toLocaleTimeString()} -{" "}
         {timeEntry.endTime?.toLocaleTimeString()}
       </div>
+      <button
+        className="btn btn-error"
+        onClick={() => mutate({ id: timeEntry.id })}
+      >
+        <Icon icon="ri-delete-bin-2-fill" />
+      </button>
     </div>
   );
 };

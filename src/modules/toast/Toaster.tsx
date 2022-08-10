@@ -2,6 +2,21 @@ import React, { useEffect } from "react";
 import { Toast } from "./toastStore";
 import { Icon } from "@/components/icon/Icon";
 
+const getTailwindAlertType = (type: Toast["type"]) => {
+  switch (type) {
+    case "info":
+      return "alert-info";
+    case "error":
+      return "alert-error";
+    case "warning":
+      return "alert-error";
+    case "success":
+      return "alert-success";
+    default:
+      return "alert-info";
+  }
+};
+
 interface ToastProps extends Toast {
   removeToast: () => void;
 }
@@ -28,7 +43,7 @@ export const Toaster = ({
     };
   }, [sticky, removeToast]);
 
-  const alertType = `alert-${type}`;
+  const alertType = getTailwindAlertType(type);
 
   return (
     <div className={`alert ${alertType}`}>

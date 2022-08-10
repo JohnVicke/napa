@@ -1,21 +1,25 @@
 import React from "react";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   startIcon?: React.ReactNode;
   endContent?: React.ReactNode;
   containerSize?: "sm" | "md" | "lg";
+  name: string;
   label?: string;
-}
+};
 
 export const TextInput = ({
   startIcon,
   endContent,
   label,
+  size,
   containerSize = "md",
+  name,
   ...props
 }: InputProps) => {
   const [hideEndContent, setHideEndContent] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+
   return (
     <div className="form-control relative w-full">
       {label && <label className="label">{label}</label>}
@@ -24,6 +28,7 @@ export const TextInput = ({
       </div>
       <input
         {...props}
+        id={name}
         ref={inputRef}
         onFocus={() => setHideEndContent(true)}
         onBlur={() => {

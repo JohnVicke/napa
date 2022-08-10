@@ -74,13 +74,14 @@ model FlexHours {
 }
 
 model WorkDayTimeEntry {
-  id        Int       @id @default(autoincrement())
-  startTime DateTime
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  endTime   DateTime?
-  WorkDay   WorkDay   @relation(fields: [workDayId], references: [id])
-  workDayId Int
+  id          Int       @id @default(autoincrement())
+  startTime   DateTime
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  endTime     DateTime?
+  WorkDay     WorkDay   @relation(fields: [workDayId], references: [id])
+  workDayId   Int
+  description String?
 }
 
 model WorkDay {
@@ -109,6 +110,7 @@ model WorkWeek {
   userId      String?
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([weekNumber, userId])
 }

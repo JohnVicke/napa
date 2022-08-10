@@ -91,8 +91,6 @@ export const timerRouter = createProtectedRouter()
         },
       });
 
-      console.log(updateTimer);
-
       return dayEntry;
     },
   });

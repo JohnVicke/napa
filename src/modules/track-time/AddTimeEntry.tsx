@@ -2,8 +2,9 @@ import { TextInput } from "@/components/TextInput";
 import { trpc } from "@/utils/trpc";
 import React from "react";
 import { TrackTimeAutomatically } from "./TrackTimeAutomatically";
-import { TrackTimeManually } from "./TrackTimeManually";
+import { AddTimeManually } from "./AddTimeManually";
 import { useElapsedTime } from "./useElapsedTime";
+import { useToastStore } from "../toast/toastStore";
 
 const Timer = ({ startTime }: { startTime: Date }) => {
   const elapsedTime = useElapsedTime(startTime);
@@ -16,12 +17,14 @@ type AddTimeEntryProps = {
 
 export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   const [editManually, setEditManually] = React.useState(false);
+  const { addToast } = useToastStore();
   const timer = trpc.useQuery(["timer.getTimer"]);
   const { setQueryData, getQueryData } = trpc.useContext();
 
   const startTimer = trpc.useMutation(["timer.startTimer"], {
     onSuccess: (data) => {
       if (data) {
+        addToast({ message: "Started timer", type: "success" });
         setQueryData(["timer.getTimer"], { ...data });
       }
     },
@@ -30,6 +33,7 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   const stopTimer = trpc.useMutation(["timer.stopTimer"], {
     onSuccess: (day) => {
       if (timer.data) {
+        addToast({ message: "Stopped timer", type: "success" });
         setQueryData(["timer.getTimer"], { ...timer.data, on: false });
       }
       const weekData = getQueryData(["workweek.getWorkWeek"]);
@@ -48,6 +52,8 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
     },
   });
 
+  //const addTimeEntry= trpc.useMutation([""]);
+
   const handleStart = () => {
     startTimer.mutate();
   };
@@ -57,17 +63,13 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   };
 
   return (
-    <div className="sticky-top flex flex-col gap-2 py-8 bg-base-100 items-end lg:flex-row w-full">
-      <div className="flex w-full flex-col gap-2 justify-end items-end lg:justify-start lg:flex-row">
-        {!!timer.data?.on && timer.data.startTime ? (
+    <div className="sticky-top py-4 bg-base-100  lg:flex-row w-full">
+      <div>
+        {!!timer.data?.on && timer.data.startTime && (
           <Timer startTime={timer.data?.startTime} />
-        ) : (
-          <div className="flex-1 w-full">
-            <TextInput label="Description" placeholder="Work..." />
-          </div>
         )}
         {editManually ? (
-          <TrackTimeManually setEditType={() => setEditManually(false)} />
+          <AddTimeManually setEditType={() => setEditManually(false)} />
         ) : (
           <TrackTimeAutomatically
             startTimer={handleStart}

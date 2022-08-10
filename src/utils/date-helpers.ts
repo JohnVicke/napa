@@ -1,21 +1,27 @@
-export const getCurrentWeekMonday = () => {
-  const today = new Date();
+export const getLastMondayFromDate = (date: Date) => {
   const monday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - today.getDay() + 1
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() - date.getDay() + 1
   );
   return monday;
 };
 
-export const getCurrentWeekSunday = () => {
-  const today = new Date();
+export const getNextSundayFromDate = (date: Date) => {
   const sunday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - today.getDay() + 7
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() - date.getDay() + 7
   );
   return sunday;
+};
+
+export const getWeeknumberFromDate = (date: Date) => {
+  const janFirst = new Date(date.getFullYear(), 0, 1);
+  const days = Math.floor(
+    (date.getTime() - janFirst.getTime()) / (24 * 60 * 60 * 1000)
+  );
+  return Math.floor(days / 7);
 };
 
 export const getCurrentWeekNumber = () => {
@@ -43,7 +49,24 @@ export const getElapsedHours = (start: Date, end: Date) => {
   return Math.floor(diff / (1000 * 60 * 60));
 };
 
-const padStart = (num: number) => (num < 10 ? `0${num}` : num);
+export const padStart = (num: number) => (num < 10 ? `0${num}` : num);
+
+export const getLocaleISOString = ({
+  hours,
+  minutes,
+}: {
+  hours: number;
+  minutes: number;
+}) => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return `${year}-${padStart(month)}-${padStart(day)}T${padStart(
+    hours
+  )}:${padStart(minutes)}`;
+};
 
 export const getTimeDifferenceString = (startTime: Date, endTime: Date) => {
   const diff = endTime.getTime() - startTime.getTime();
