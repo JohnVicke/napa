@@ -15,14 +15,14 @@ export const SideMenuItem = ({
   active,
 }: SideMenuItemProps) => (
   <Link href={href}>
-    <div
-      className={`flex  ${
+    <button
+      className={`flex w-full ${
         active ? "bg-base-200" : ""
       } hover:bg-base-200 px-4 py-2 transition-all cursor-pointer select-none`}
     >
       {icon}
       <div className="mr-2" />
       <p className="font-bold">{title}</p>
-    </div>
+    </button>
   </Link>
 );
