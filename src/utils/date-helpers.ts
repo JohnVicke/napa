@@ -4,6 +4,7 @@ export const getLastMondayFromDate = (date: Date) => {
     date.getMonth(),
     date.getDate() - date.getDay() + 1,
   );
+  monday.setHours(date.getHours());
   return monday;
 };
 
@@ -13,6 +14,7 @@ export const getNextSundayFromDate = (date: Date) => {
     date.getMonth(),
     date.getDate() - date.getDay() + 7,
   );
+  sunday.setHours(date.getHours());
   return sunday;
 };
 
@@ -20,15 +22,6 @@ export const getWeeknumberFromDate = (date: Date) => {
   const janFirst = new Date(date.getFullYear(), 0, 1);
   const days = Math.floor(
     (date.getTime() - janFirst.getTime()) / (24 * 60 * 60 * 1000),
-  );
-  return Math.floor(days / 7);
-};
-
-export const getCurrentWeekNumber = () => {
-  const today = new Date();
-  const janFirst = new Date(today.getFullYear(), 0, 1);
-  const days = Math.floor(
-    (today.getTime() - janFirst.getTime()) / (24 * 60 * 60 * 1000),
   );
   return Math.floor(days / 7);
 };
@@ -42,30 +35,33 @@ const days = [
   "Friday",
   "Saturday",
 ];
-export const getWeekDayString = (day: number) => days[day];
+export const getWeekdayString = (day: number) => days[day];
 
 export const getElapsedHours = (start: Date, end: Date) => {
-  const diff = start.getTime() - end.getTime();
-  return Math.floor(diff / (1000 * 60 * 60));
+  const diff = end.getTime() - start.getTime();
+  return Math.abs(Math.floor(diff / (1000 * 60 * 60)));
 };
 
-export const padStart = (num: number) => (num < 10 ? `0${num}` : num);
+export const padStart = (num: number) => (num < 10 ? `0${num}` : `${num}`);
 
 export const getLocaleISOString = ({
+  date = new Date(),
   hours,
   minutes,
 }: {
-  hours: number;
-  minutes: number;
+  date?: Date;
+  hours?: number;
+  minutes?: number;
 }) => {
-  const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
+  const h = hours || date.getHours();
+  const m = minutes || date.getMinutes();
 
-  return `${year}-${padStart(month)}-${padStart(day)}T${padStart(
-    hours,
-  )}:${padStart(minutes)}`;
+  return `${year}-${padStart(month)}-${padStart(day)}T${padStart(h)}:${padStart(
+    m,
+  )}`;
 };
 
 export const getTimeDifferenceString = (startTime: Date, endTime: Date) => {
