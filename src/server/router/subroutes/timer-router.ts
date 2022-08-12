@@ -1,4 +1,3 @@
-import { getCurrentWeekNumber } from "@/utils/date-helpers";
 import { z } from "zod";
 import { createProtectedRouter } from "../protected-router";
 

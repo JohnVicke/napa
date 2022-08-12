@@ -2,7 +2,7 @@ import { trpc } from "@/utils/trpc";
 import React from "react";
 import { TextInput } from "@/components/TextInput";
 import { inferQueryResponse } from "@/pages/api/trpc/[trpc]";
-import { getWeekDayString } from "@/utils/date-helpers";
+import { getWeekdayString } from "@/utils/date-helpers";
 import { useElapsedTime } from "@/modules/track-time/useElapsedTime";
 import { useFormik } from "formik";
 import { AddTimeEntry } from "@/modules/track-time/AddTimeEntry";
@@ -25,7 +25,7 @@ const WorkDay = ({ day, children }: React.PropsWithChildren<WorkDayProps>) => {
 
   return (
     <>
-      <div>{getWeekDayString(day.day)}</div>
+      <div>{getWeekdayString(day.day)}</div>
       <div className="w-full">
         <LayoutGroup>
           <AnimatePresence>
