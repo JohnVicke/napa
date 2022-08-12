@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "echo \"Tests not setup yet\"",
+    "test:e2e": "npx playwright test",
     "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "postinstall": "prisma generate",
     "db:up": "cd ./prisma && supabase start",
@@ -38,6 +40,7 @@
     "zustand": "^4.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.25.0",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",

@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Time keeper</title>
+        <title>napa</title>
         <meta name="description" content="Keep track of time at the office" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
