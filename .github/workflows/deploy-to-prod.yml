@@ -49,3 +49,33 @@ jobs:
           path: "."
           key: ${{ github.sha }}
       - run: npm run test
+
+  playwright_setup:
+    name: Playwright setup
+    runs-on: ubuntu-latest
+    outputs:
+      preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+    steps:
+      - name: Wait for Vercel preview deployment to be ready
+        uses: patrickedqvist/wait-for-vercel-preview@1.2.0
+        id: waitForVercelPreviewDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
+
+  playwright:
+    name: e2e
+    runs-on: ubuntu-latest
+    needs: [build, playwright_setup]
+    timeout-minutes: 5
+    steps:
+      - uses: actions/cache@v1
+        id: restore-build
+        with:
+          path: "."
+          key: ${{ github.sha }}
+      - run: npx playwright install --with-deps
+      - name: Run tests
+        run: npm run test:e2e
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ needs.test_setup.outputs.preview_url }}
