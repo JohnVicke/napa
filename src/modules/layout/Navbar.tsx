@@ -138,6 +138,7 @@ border-b-2 border-base-200
             <div className="gap-2 flex-1 justify-end mr-4">
               <div className="form-control relative hidden sm:block">
                 <TextInput
+                  name="search"
                   type="text"
                   placeholder="Search"
                   containerSize="sm"
