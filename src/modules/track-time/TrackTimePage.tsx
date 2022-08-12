@@ -7,6 +7,8 @@ import { useElapsedTime } from "@/modules/track-time/useElapsedTime";
 import { useFormik } from "formik";
 import { AddTimeEntry } from "@/modules/track-time/AddTimeEntry";
 import { Icon } from "@/components/icon/Icon";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { Layout } from "../layout/Layout";
 
 type WorkDay = inferQueryResponse<"workday.getWorkDay">;
 
@@ -24,7 +26,24 @@ const WorkDay = ({ day, children }: React.PropsWithChildren<WorkDayProps>) => {
   return (
     <>
       <div>{getWeekDayString(day.day)}</div>
-      <div className="w-full">{children}</div>
+      <div className="w-full">
+        <LayoutGroup>
+          <AnimatePresence>
+            {day.WorkDayTimeEntry.map((timeEntry, i) => (
+              <motion.div
+                key={timeEntry.id}
+                layoutId={`${timeEntry.id}`}
+                exit={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: i / 10 } }}
+                className="pb-2"
+              >
+                <WorkDayTimeEntry timeEntry={timeEntry} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </LayoutGroup>
+      </div>
     </>
   );
 };
@@ -144,13 +163,7 @@ export const TrackTimePage = () => {
       {workWeek.data.workWeek.WorkDay.length > 0 ? (
         <div className="flex flex-col gap-2">
           {workWeek.data.workWeek.WorkDay.map((day) => (
-            <WorkDay key={day.id} day={day}>
-              {day.WorkDayTimeEntry.map((timeEntry) => (
-                <div className="pb-2" key={timeEntry.id}>
-                  <WorkDayTimeEntry timeEntry={timeEntry} />
-                </div>
-              ))}
-            </WorkDay>
+            <WorkDay key={day.id} day={day} />
           ))}
         </div>
       ) : (

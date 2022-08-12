@@ -8,7 +8,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   return (
     <Navbar>
       {status === "authenticated" && <SideMenu />}
-      <div className="mx-auto mt-24 flex w-full max-w-screen-lg flex-col justify-between pl-4 pr-4 lg:pl-56">
+      <div className="mx-auto mt-24 flex w-full max-w-screen-xl flex-col justify-between pl-4 pr-4 lg:pl-56">
         {children}
       </div>
     </Navbar>
