@@ -7,7 +7,7 @@ interface ToastControllerProps {}
 export const ToastController = ({}: ToastControllerProps) => {
   const { toasts, removeToast } = useToastStore();
   return (
-    <div className="toast toast-top toast-end avoid-nav w-full max-w-xs">
+    <div className="avoid-nav toast toast-end toast-top w-full max-w-xs">
       {toasts.map((toast: Toast) => (
         <Toaster
           key={toast.id}

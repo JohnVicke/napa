@@ -20,11 +20,11 @@ export const TrackTimeAutomatically = ({
       className={`btn ${timerOn ? "btn-error" : "btn-primary"}`}
       onClick={timerOn ? stopTimer : startTimer}
     >
-      <Icon icon="ri-play-fill" className="font-normal mr-2" />
+      <Icon icon="ri-play-fill" className="mr-2 font-normal" />
       {`${timerOn ? "Stop" : "Start"}`} timer
     </button>
     <button className="btn btn-outline" onClick={setEditType}>
-      <Icon icon="ri-edit-2-fill" className="font-normal mr-2" />
+      <Icon icon="ri-edit-2-fill" className="mr-2 font-normal" />
       Manually
     </button>
   </div>

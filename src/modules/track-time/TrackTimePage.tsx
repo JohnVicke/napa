@@ -47,11 +47,11 @@ const WorkDayTimeEntry = ({ timeEntry }: WorkDayTimeEntryProps) => {
                       ...d,
                       WorkDayTimeEntry: [
                         ...d.WorkDayTimeEntry.filter(
-                          (t) => t.id !== timeEntry.id
+                          (t) => t.id !== timeEntry.id,
                         ),
                       ],
                     }
-                  : d
+                  : d,
               ),
             ],
           },
@@ -61,7 +61,7 @@ const WorkDayTimeEntry = ({ timeEntry }: WorkDayTimeEntryProps) => {
   });
 
   return (
-    <div className="flex w-full bg-base-200 px-2 py-4 rounded-lg justify-between">
+    <div className="flex w-full justify-between rounded-lg bg-base-200 px-2 py-4">
       <div>{elapsedTime}</div>
       <div>
         {timeEntry.startTime?.toLocaleTimeString()} -{" "}

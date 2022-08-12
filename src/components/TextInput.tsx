@@ -23,7 +23,7 @@ export const TextInput = ({
   return (
     <div className="form-control relative w-full">
       {label && <label className="label">{label}</label>}
-      <div className="absolute top-[50%] translate-y-[-50%] left-2 gap-1">
+      <div className="absolute top-[50%] left-2 translate-y-[-50%] gap-1">
         {startIcon}
       </div>
       <input
@@ -40,7 +40,7 @@ export const TextInput = ({
         ${!!startIcon ? "pl-8" : "pl-4"}`}
       />
       {!hideEndContent && (
-        <div className="absolute top-[50%] translate-y-[-50%] right-2 gap-1 hidden lg:flex">
+        <div className="absolute top-[50%] right-2 hidden translate-y-[-50%] gap-1 lg:flex">
           {endContent}
         </div>
       )}

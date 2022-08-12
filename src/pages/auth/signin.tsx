@@ -11,10 +11,10 @@ interface SigninProps {
 const Signin = ({ callbackUrl }: SigninProps) => {
   return (
     <div className="flex justify-center pt-24">
-      <div className="card flex-shrink-0 w-full max-w-sm bg-base-200">
+      <div className="card w-full max-w-sm flex-shrink-0 bg-base-200">
         <div className="card-body">
           <div>
-            Login with <span className="italic text-thin">(your fav)</span>{" "}
+            Login with <span className="text-thin italic">(your fav)</span>{" "}
             provider
           </div>
           <button

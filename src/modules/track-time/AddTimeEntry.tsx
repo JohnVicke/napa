@@ -43,7 +43,7 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
             ...weekData.workWeek,
             WorkDay: [
               ...weekData.workWeek.WorkDay.map((d) =>
-                d.id === day.id ? day : d
+                d.id === day.id ? day : d,
               ),
             ],
           },
@@ -63,7 +63,7 @@ export const AddTimeEntry = ({ workWeekId }: AddTimeEntryProps) => {
   };
 
   return (
-    <div className="sticky-top py-4 bg-base-100  lg:flex-row w-full">
+    <div className="sticky-top w-full bg-base-100  py-4 lg:flex-row">
       <div>
         {!!timer.data?.on && timer.data.startTime && (
           <Timer startTime={timer.data?.startTime} />

@@ -17,7 +17,7 @@ type AsyncReturnType<T extends (...args: any) => any> = T extends (
   : any;
 
 export type InferWithAuthServerSideProps<
-  T extends (...args: any) => Promise<{ props: any }>
+  T extends (...args: any) => Promise<{ props: any }>,
 > = AsyncReturnType<T>["props"];
 
 type WithAuthServerSidePropsOptions = {
@@ -32,10 +32,10 @@ type EmptyProps = {
 
 export const withAuthServerSideProps = <T extends EmptyProps = EmptyProps>(
   getServerSidePropsFunc?: (ctx: GetServerSidePropsContext) => Promise<T>,
-  options: WithAuthServerSidePropsOptions = {}
+  options: WithAuthServerSidePropsOptions = {},
 ) => {
   return async (
-    ctx: GetServerSidePropsContext
+    ctx: GetServerSidePropsContext,
   ): Promise<{ props: T["props"] }> => {
     const session = await getAuthSession(ctx);
     const callbackURI = getCallbackURI(ctx.req.url);

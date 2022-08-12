@@ -12,7 +12,7 @@ export const useElapsedTime = (startTime?: Date, endTime?: Date | null) => {
 
     const intervalId = setInterval(() => {
       setTimeElapsed(
-        getTimeDifferenceString(startTime as Date, endTime || new Date())
+        getTimeDifferenceString(startTime as Date, endTime || new Date()),
       );
     }, 1000);
 

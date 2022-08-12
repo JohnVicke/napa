@@ -2,7 +2,7 @@ export const getLastMondayFromDate = (date: Date) => {
   const monday = new Date(
     date.getFullYear(),
     date.getMonth(),
-    date.getDate() - date.getDay() + 1
+    date.getDate() - date.getDay() + 1,
   );
   return monday;
 };
@@ -11,7 +11,7 @@ export const getNextSundayFromDate = (date: Date) => {
   const sunday = new Date(
     date.getFullYear(),
     date.getMonth(),
-    date.getDate() - date.getDay() + 7
+    date.getDate() - date.getDay() + 7,
   );
   return sunday;
 };
@@ -19,7 +19,7 @@ export const getNextSundayFromDate = (date: Date) => {
 export const getWeeknumberFromDate = (date: Date) => {
   const janFirst = new Date(date.getFullYear(), 0, 1);
   const days = Math.floor(
-    (date.getTime() - janFirst.getTime()) / (24 * 60 * 60 * 1000)
+    (date.getTime() - janFirst.getTime()) / (24 * 60 * 60 * 1000),
   );
   return Math.floor(days / 7);
 };
@@ -28,7 +28,7 @@ export const getCurrentWeekNumber = () => {
   const today = new Date();
   const janFirst = new Date(today.getFullYear(), 0, 1);
   const days = Math.floor(
-    (today.getTime() - janFirst.getTime()) / (24 * 60 * 60 * 1000)
+    (today.getTime() - janFirst.getTime()) / (24 * 60 * 60 * 1000),
   );
   return Math.floor(days / 7);
 };
@@ -64,7 +64,7 @@ export const getLocaleISOString = ({
   const day = date.getDate();
 
   return `${year}-${padStart(month)}-${padStart(day)}T${padStart(
-    hours
+    hours,
   )}:${padStart(minutes)}`;
 };
 

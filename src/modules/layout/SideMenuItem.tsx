@@ -18,7 +18,7 @@ export const SideMenuItem = ({
     <button
       className={`flex w-full ${
         active ? "bg-base-200" : ""
-      } hover:bg-base-200 px-4 py-2 transition-all cursor-pointer select-none`}
+      } cursor-pointer select-none px-4 py-2 transition-all hover:bg-base-200`}
     >
       {icon}
       <div className="mr-2" />

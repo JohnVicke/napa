@@ -31,7 +31,7 @@ export const DashboardPage = () => {
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-bold">Summary</h2>
-      <div className="stats stats-vertical md:stats-horizontal shadow pt-2">
+      <div className="stats stats-vertical pt-2 shadow md:stats-horizontal">
         <Stat
           title="Total hours worked"
           desc="Logged on time-keeper"
@@ -44,6 +44,7 @@ export const DashboardPage = () => {
           severity="success"
         />
       </div>
+      <div className="divider" />
     </div>
   );
 };

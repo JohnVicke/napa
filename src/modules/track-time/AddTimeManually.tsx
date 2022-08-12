@@ -22,7 +22,7 @@ export const AddTimeManually = ({
             ...weekData.workWeek,
             WorkDay: [
               ...weekData.workWeek.WorkDay.map((d) =>
-                d.id === day.id ? day : d
+                d.id === day.id ? day : d,
               ),
             ],
           },
@@ -58,7 +58,7 @@ export const AddTimeManually = ({
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="flex gap-2 w-full flex-col lg:flex-row">
+      <div className="flex w-full flex-col gap-2 lg:flex-row">
         <TextInput
           name="description"
           className="flex-1"
@@ -84,13 +84,13 @@ export const AddTimeManually = ({
           />
         </div>
       </div>
-      <div className="flex gap-2 justify-end mt-4">
+      <div className="mt-4 flex justify-end gap-2">
         <button type="submit" className="btn btn-primary">
-          <Icon icon="ri-save-fill" className="font-normal mr-2" />
+          <Icon icon="ri-save-fill" className="mr-2 font-normal" />
           Save
         </button>
         <button className="btn btn-outline" onClick={setEditType}>
-          <Icon icon="ri-time-fill" className="font-normal mr-2" />
+          <Icon icon="ri-time-fill" className="mr-2 font-normal" />
           Use timer
         </button>
       </div>
