@@ -71,9 +71,9 @@ model FlexHours {
 
 model WorkDayTimeEntry {
   id          Int       @id @default(autoincrement())
-  startTime   DateTime
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  startTime   DateTime
   endTime     DateTime?
   WorkDay     WorkDay   @relation(fields: [workDayId], references: [id])
   workDayId   Int

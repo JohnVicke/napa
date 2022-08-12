@@ -26,15 +26,21 @@ const Stat: React.FC<StatProps> = ({
 };
 
 export const DashboardPage = () => {
-  const { addToast } = useToastStore();
   const { data } = trpc.useQuery(["workweek.getSummary"]);
+  const google = trpc.useQuery(["googleTask.getLists"]);
+
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl font-bold">Summary</h2>
       <div className="stats stats-vertical pt-2 shadow md:stats-horizontal">
         <Stat
-          title="Total hours worked"
-          desc="Logged on time-keeper"
+          title="Total hours"
+          desc="Scheduled hours"
+          value={data?.total || 0}
+        />
+        <Stat
+          title="Hours worked"
+          desc="Hours logged on napa"
           value={data?.total || 0}
         />
         <Stat
@@ -45,6 +51,9 @@ export const DashboardPage = () => {
         />
       </div>
       <div className="divider" />
+      {!google.isLoading && google.data && (
+        <div>{JSON.stringify(google.data)}</div>
+      )}
     </div>
   );
 };
