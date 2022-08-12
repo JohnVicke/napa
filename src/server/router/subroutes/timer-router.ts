@@ -52,6 +52,8 @@ export const timerRouter = createProtectedRouter()
         endTime: new Date(),
       };
 
+      console.log(input.workWeekId);
+
       const dayEntry = await ctx.prisma.workDay.upsert({
         where: {
           workWeekId_day: {
@@ -61,6 +63,7 @@ export const timerRouter = createProtectedRouter()
         },
         create: {
           day: today,
+          workWeekId: input.workWeekId,
           WorkDayTimeEntry: {
             create: {
               ...timeEntry,
