@@ -1,0 +1,50 @@
+name: GoLang Audit
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "src/**"
+
+jobs:
+  build:
+    name: 🛠️ Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: 👀 Checking .nvmrc...
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{steps.nvm.outputs.NODE_VERSION}}
+      - run: npm ci
+      - uses: actions/cache@v1
+        id: cache-build
+        with:
+          path: "."
+          key: ${{ github.sha }}
+
+  lint:
+    name: 🧹 Lint
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/cache@v1
+        id: restore-build
+        with:
+          path: "."
+          key: ${{ github.sha }}
+      - run: npm run lint
+
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/cache@v1
+        id: restore-build
+        with:
+          path: "."
+          key: ${{ github.sha }}
+      - run: npm run test
