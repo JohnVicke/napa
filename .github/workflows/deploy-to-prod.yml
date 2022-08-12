@@ -2,7 +2,7 @@ name: GoLang Audit
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
     #paths:
     #- "src/**"
 
