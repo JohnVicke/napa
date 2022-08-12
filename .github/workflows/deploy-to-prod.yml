@@ -1,4 +1,4 @@
-name: GoLang Audit
+name: Production workflow
 
 on:
   pull_request:
