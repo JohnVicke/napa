@@ -11,7 +11,7 @@ export const googleTaskRouter = createProtectedRouter()
       });
 
       if (!account?.access_token) {
-        throw new Error("No access token not found");
+        throw new Error("Access token not found");
       }
       const { access_token } = account;
       const taskLists = await getTasksLists(access_token);
@@ -29,7 +29,7 @@ export const googleTaskRouter = createProtectedRouter()
       });
 
       if (!account?.access_token) {
-        throw new Error("No access token not found");
+        throw new Error("Access token not found");
       }
       const { access_token } = account;
       const tasks = await getTasks(access_token, input.listId);
