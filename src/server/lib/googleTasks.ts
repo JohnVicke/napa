@@ -9,8 +9,8 @@ const TaskListSchema = z.object({
   title: z.string(),
   updated: z.string(),
   selfLink: z.string(),
-  position: z.string(),
-  status: z.string(),
+  position: z.string().nullish(),
+  status: z.string().nullish(),
   links: z.array(z.string()).nullish(),
 });
 
@@ -29,12 +29,13 @@ export const getTasksLists = async (access_token: string) => {
     },
   });
 
-  const json = await res.json();
-  const taskResponse = await TaskListResponseSchem.parseAsync(json);
-  console.log(taskResponse);
-  const tasks = taskResponse.items;
-
-  return tasks;
+  try {
+    const json = await res.json();
+    const { items } = TaskListResponseSchem.parse(json);
+    return items;
+  } catch (err) {
+    throw new Error("Invalid response from Google Tasks API");
+  }
 };
 
 const TaskSchema = z.object({});

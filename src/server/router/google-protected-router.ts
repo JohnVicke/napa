@@ -1,7 +1,7 @@
 import * as trpc from "@trpc/server";
-import { createProtectedRouter } from "../router/protected-router";
+import { createProtectedRouter } from "./protected-router";
 
-export const createProtectedGoogleRouter = () => {
+export function createProtectedGoogleRouter() {
   return createProtectedRouter().middleware(async ({ ctx, next }) => {
     const accountWithTokens = await ctx.prisma.account.findFirst({
       where: { userId: ctx.session.user.id },
@@ -20,6 +20,13 @@ export const createProtectedGoogleRouter = () => {
       throw new trpc.TRPCError({ code: "UNAUTHORIZED" });
     }
 
-    return next({ ctx });
+    const { access_token } = accountWithTokens;
+
+    return next({
+      ctx: {
+        ...ctx,
+        access_token,
+      },
+    });
   });
-};
+}

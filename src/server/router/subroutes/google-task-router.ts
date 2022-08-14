@@ -1,19 +1,12 @@
 import { getTasks, getTasksLists } from "@/server/lib/googleTasks";
 import { z } from "zod";
+import { createProtectedGoogleRouter } from "../google-protected-router";
 import { createProtectedRouter } from "../protected-router";
 
-export const googleTaskRouter = createProtectedRouter()
+export const googleTaskRouter = createProtectedGoogleRouter()
   .query("getLists", {
     resolve: async ({ ctx }) => {
-      const account = await ctx.prisma.account.findFirst({
-        where: { userId: ctx.session.user.id },
-        select: { access_token: true },
-      });
-
-      if (!account?.access_token) {
-        throw new Error("Access token not found");
-      }
-      const { access_token } = account;
+      const { access_token } = ctx;
       const taskLists = await getTasksLists(access_token);
       return taskLists;
     },
@@ -23,15 +16,7 @@ export const googleTaskRouter = createProtectedRouter()
       listId: z.string(),
     }),
     resolve: async ({ ctx, input }) => {
-      const account = await ctx.prisma.account.findFirst({
-        where: { userId: ctx.session.user.id },
-        select: { access_token: true },
-      });
-
-      if (!account?.access_token) {
-        throw new Error("Access token not found");
-      }
-      const { access_token } = account;
+      const { access_token } = ctx;
       const tasks = await getTasks(access_token, input.listId);
       return tasks;
     },
