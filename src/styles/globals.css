@@ -7,27 +7,41 @@
   --footer-height: 160px;
 }
 
+@layer base {
+  h1,
+  h2 {
+    font-family: Playfair Display, serif;
+  }
+}
+
 .btn {
   text-transform: none;
 }
 
-.inset-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+@layer utilities {
+  .full-bleed {
+    box-shadow: 0 0 0 100vmax;
+    clip-path: inset(0 - 100vmax);
+  }
 
-.h-fullpage {
-  min-height: calc(100vh - var(--navbar-height));
-}
+  .inset-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-.avoid-nav {
-  margin-top: var(--navbar-height);
-}
+  .h-fullpage {
+    min-height: calc(100vh - var(--navbar-height));
+  }
 
-.sticky-top {
-  position: sticky;
-  top: var(--navbar-height);
-  z-index: 1;
+  .avoid-nav {
+    margin-top: var(--navbar-height);
+  }
+
+  .sticky-top {
+    position: sticky;
+    top: var(--navbar-height);
+    z-index: 1;
+  }
 }

@@ -5,14 +5,19 @@ import { SideMenuItem } from "./SideMenuItem";
 
 const items = [
   {
-    title: "Track time",
-    href: "/track-time",
-    icon: <Icon icon="ri-time-fill" />,
-  },
-  {
     title: "Dashboard",
     href: "/dashboard",
     icon: <Icon icon="ri-dashboard-fill" />,
+  },
+  {
+    title: "Tasks",
+    href: "/tasks",
+    icon: <Icon icon="ri-list-check-2" />,
+  },
+  {
+    title: "Track time",
+    href: "/track-time",
+    icon: <Icon icon="ri-time-fill" />,
   },
 ];
 
@@ -22,7 +27,10 @@ export const SideMenuItems = () => {
     <ul className="w-full">
       {items.map((item) => (
         <li key={item.title} className="py-[0.1rem]">
-          <SideMenuItem {...item} active={router.pathname === item.href} />
+          <SideMenuItem
+            {...item}
+            active={router.pathname.startsWith(item.href)}
+          />
         </li>
       ))}
     </ul>

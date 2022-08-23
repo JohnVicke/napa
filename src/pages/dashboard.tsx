@@ -1,6 +1,6 @@
 import React from "react";
 import { DashboardPage } from "@/modules/dashboard/DashboardPage";
-import { withAuthServerSideProps } from "../../utils/withAuthServerSideProps";
+import { withAuthServerSideProps } from "../utils/withAuthServerSideProps";
 
 const Dashboard = () => <DashboardPage />;
 

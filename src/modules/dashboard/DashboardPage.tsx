@@ -27,7 +27,6 @@ const Stat: React.FC<StatProps> = ({
 
 export const DashboardPage = () => {
   const { data } = trpc.useQuery(["workweek.getSummary"]);
-  const google = trpc.useQuery(["googleTask.getLists"]);
 
   return (
     <div className="flex flex-col">
@@ -51,9 +50,6 @@ export const DashboardPage = () => {
         />
       </div>
       <div className="divider" />
-      {!google.isLoading && google.data && (
-        <div>{JSON.stringify(google.data)}</div>
-      )}
     </div>
   );
 };
