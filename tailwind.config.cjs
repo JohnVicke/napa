@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "Playfair-Display": ["Playfair Display", "serif"],
+        "Source-Sans-Pro": ["Source Sans Pro", "sans-serif"],
+      },
+    },
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {

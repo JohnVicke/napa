@@ -17,6 +17,14 @@ export const workweekRouter = createProtectedRouter()
         },
       });
 
+      const workWeeks = await ctx.prisma.workWeek.aggregate({
+        where: { userId: ctx.session.user.id },
+        _count: {
+          totalHours: true,
+          hoursWorked: true,
+        },
+      });
+
       if (!user) {
         throw new Error("User not found");
       }
