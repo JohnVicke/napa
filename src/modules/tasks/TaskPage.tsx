@@ -3,6 +3,8 @@ import { trpc } from "@/utils/trpc";
 import { inferQueryResponse } from "@/pages/api/trpc/[trpc]";
 import { TasksTabs } from "./TasksTabs";
 import { Reorder } from "framer-motion";
+import { Icon } from "@/components/icon/Icon";
+import { AddTaskModal } from "./AddTaskModalProps";
 
 type Task = inferQueryResponse<"googleTask.getTasks">[0];
 
@@ -98,9 +100,7 @@ export const TaskPage = ({ id, taskLists }: TaskPageProps) => {
     <TasksTabs taskLists={taskLists} activeId={id}>
       <div className="mt-4" />
       {data && (
-        <>
-          <h5>tasks</h5>
-          {id}
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             {data
               .filter((task) => task.status === "needsAction")
@@ -128,7 +128,15 @@ export const TaskPage = ({ id, taskLists }: TaskPageProps) => {
                 />
               ))}
           </div>
-        </>
+          <label
+            htmlFor="add-task-modal"
+            className="modal-button btn btn-primary"
+          >
+            Add task
+            <Icon icon="ri-add-box-fill" className="ml-2 font-normal" />
+          </label>
+          <AddTaskModal listId={id} />
+        </div>
       )}
     </TasksTabs>
   );

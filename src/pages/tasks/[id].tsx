@@ -12,11 +12,11 @@ const Task = ({}: TaskProps) => {
   const router = useRouter();
   const { id } = router.query;
 
-  if (typeof id !== "string" || !data?.taskLists) {
+  if (typeof id !== "string" || !data) {
     return null;
   }
 
-  return <TaskPage id={id} taskLists={data.taskLists} />;
+  return <TaskPage id={id} taskLists={data} />;
 };
 
 export default Task;
