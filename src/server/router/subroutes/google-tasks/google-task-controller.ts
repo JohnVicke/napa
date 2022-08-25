@@ -1,4 +1,3 @@
-import { stringify } from "querystring";
 import {
   TaskList,
   taskListParser,
@@ -68,7 +67,6 @@ export const updateTask = async (
   taskId: string,
   task: Partial<Task>,
 ): Promise<Task> => {
-  console.log(JSON.stringify({ ...task, id: taskId }));
   const res = await fetch(`${BASE_URL}/lists/${listId}/tasks/${taskId}`, {
     method: "PUT",
     headers: {

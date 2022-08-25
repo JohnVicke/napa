@@ -7,10 +7,13 @@ type AddTaskModalProps = {
 };
 
 export const AddTaskModal = ({ listId }: AddTaskModalProps) => {
-  const { getQueryData, setQueryData } = trpc.useContext();
+  const { setQueryData } = trpc.useContext();
   const { mutate } = trpc.useMutation(["googleTask.createTask"], {
     onSuccess: (newTask) => {
-      const listData = getQueryData(["googleTask.getTasks", { id: listId }]);
+      setQueryData(["googleTask.getTasks", { id: listId }], (data = []) => [
+        ...data,
+        newTask,
+      ]);
     },
   });
 
@@ -21,6 +24,7 @@ export const AddTaskModal = ({ listId }: AddTaskModalProps) => {
     },
     onSubmit: (values) => {
       mutate({ listId, task: values });
+      formik.resetForm();
     },
   });
 
