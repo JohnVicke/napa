@@ -131,21 +131,6 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
               </div>
             </div>
             <div className="mr-4 flex-1 justify-end gap-2">
-              <div className="form-control relative hidden sm:block">
-                <TextInput
-                  name="search"
-                  type="text"
-                  placeholder="Search"
-                  containerSize="sm"
-                  startIcon={<i className="ri-search-line ri-md" />}
-                  endContent={
-                    <>
-                      <kbd className="kbd kbd-xs px-2">ctrl</kbd>+
-                      <kbd className="kbd kbd-xs px-2">k</kbd>
-                    </>
-                  }
-                />
-              </div>
               {status === "authenticated" ? (
                 <ProfileMenu user={data.user} />
               ) : (
