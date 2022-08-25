@@ -15,7 +15,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1 className="text-5xl font-bold">Time keeper</h1>
+        <h1 className="text-5xl font-bold">napa</h1>
         <div className="py-6" />
         <button
           className="btn btn-primary float-right lg:float-left"

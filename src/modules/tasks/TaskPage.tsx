@@ -4,7 +4,7 @@ import { inferQueryResponse } from "@/pages/api/trpc/[trpc]";
 import { TasksTabs } from "./TasksTabs";
 import { Reorder } from "framer-motion";
 import { Icon } from "@/components/icon/Icon";
-import { AddTaskModal } from "./AddTaskModalProps";
+import { AddTaskModal } from "./AddTaskModal";
 
 type Task = inferQueryResponse<"googleTask.getTasks">[0];
 

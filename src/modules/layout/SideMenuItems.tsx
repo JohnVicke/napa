@@ -10,14 +10,14 @@ const items = [
     icon: <Icon icon="ri-dashboard-fill" />,
   },
   {
-    title: "Tasks",
-    href: "/tasks",
-    icon: <Icon icon="ri-list-check-2" />,
-  },
-  {
     title: "Track time",
     href: "/track-time",
     icon: <Icon icon="ri-time-fill" />,
+  },
+  {
+    title: "Tasks",
+    href: "/tasks",
+    icon: <Icon icon="ri-list-check-2" />,
   },
 ];
 

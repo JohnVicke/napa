@@ -77,8 +77,8 @@ type ProfileMenuProps = {
 const ProfileMenu: React.FC<ProfileMenuProps> = ({ user }) => {
   return (
     <div className="flex-none gap-2">
-      <div className="dropdown dropdown-end">
-        <label tabIndex={0} className="btn btn-ghost btn-circle">
+      <div className="dropdown-end dropdown">
+        <label tabIndex={0} className="btn btn-circle btn-ghost">
           <ProfileAvatar
             name={user?.name as string | undefined}
             image={user?.image as string | undefined}
@@ -125,7 +125,7 @@ export const Navbar: React.FC<{ children: React.ReactNode }> = ({
               <div className="mr-6">
                 <Link href="/">
                   <button className="text-md btn btn-ghost cursor-pointer font-bold lg:text-xl">
-                    time-keeper
+                    napa
                   </button>
                 </Link>
               </div>
